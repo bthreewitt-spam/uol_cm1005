@@ -2,11 +2,11 @@ function setup()
 {
 	//create a large square canvas
 	createCanvas(800, 800);
-}
+	noStroke(); // remove borders
 
+}
 function draw()
 {
-	noStroke(); // remove borders
 	
 	// White squares
 	fill(239, 239, 239);

@@ -3,7 +3,10 @@
 function setup() 
 {
     createCanvas(512, 512);
-    
+    fill(25,25,243, 100);
+    // noFill();
+    // stroke(0,0,255);
+    noStroke();
 }
 
 function draw()
