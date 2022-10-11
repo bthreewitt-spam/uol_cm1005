@@ -47,7 +47,7 @@ function draw()
 	image(img,0,0);
 
 	//Write your code below here ...
-
+	rect(239,70,76,159)
 	//A helpful mouse pointer
 	push();
 		fill(0);
