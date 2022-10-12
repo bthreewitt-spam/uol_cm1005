@@ -62,10 +62,11 @@ function drawHead(x, y, r, g, b)
 
 function drawBody(x, y, r, g, b)
 {
+	//set stroke/fill
 	fill(r,g,b);
 	strokeWeight(6)
 
-	//main robot body
+	//main body
 	beginShape();
 	vertex(x+330, y+450);
 	vertex(x+300, y+750);
@@ -73,7 +74,7 @@ function drawBody(x, y, r, g, b)
 	vertex(x+75, y+450);
 	endShape();
 	
-	//top of robot body
+	//top of body
 	beginShape();
 	bezier(x+75, y+450, x+195, y+475,
 	x+210, y+475, x+330, y+450);
@@ -101,6 +102,10 @@ function drawBody(x, y, r, g, b)
 	ellipse(x+255, y+610, 10);
 	endContour();
 	endShape();
+
+	//reset stroke/fill
+	fill(r,g,b);
+	strokeWeight(6)
 	
 	//right arm
 }
