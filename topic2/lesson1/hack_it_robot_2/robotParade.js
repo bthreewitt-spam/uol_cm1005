@@ -10,7 +10,6 @@ function draw() {
 }
 
 function drawBender(xOffset, yOffset, r, g, b) {
-	// TODO: set x and y to corners
 	drawHead(xOffset, yOffset, r, g, b);
 	drawBody(xOffset, yOffset, r, g, b);
 	drawLeg(xOffset-5,yOffset,r,g,b); //left
