@@ -15,7 +15,7 @@ function drawBender(xOffset, yOffset, r, g, b) {
 	drawBody(xOffset, yOffset, r, g, b);
 	drawLeg(xOffset-5,yOffset,r,g,b); //left
 	drawLeg(xOffset+115,yOffset,r,g,b); //right
-	drawLeftArm(xOffset, yOffset, r,g,b);
+	drawRightArm(xOffset, yOffset, r,g,b);
 }
 
 function drawFlexo(xOffset, yOffset, r, g, b) {
@@ -150,7 +150,7 @@ function drawLeg(x,y,r,g,b){
 	arc(x+147.5, y+972, 45, 15, PI, 0);
 }
 
-function drawLeftArm(x,y,r,g,b){
+function drawRightArm(x,y,r,g,b){
 	// arm cup
 	fill(r,g,b);
 	strokeWeight(5);
@@ -184,5 +184,5 @@ function drawLeftArm(x,y,r,g,b){
 	bezier(x+440, y+820,x+410, y+830,x+390, y+830,x+360, y+820);
 	endShape(CLOSE);
 	
-
+	// TODO: Add arm lines
 }
