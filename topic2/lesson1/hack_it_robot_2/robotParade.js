@@ -11,11 +11,11 @@ function draw() {
 
 function drawBender(xOffset, yOffset, r, g, b) {
 	drawHead(xOffset, yOffset, r, g, b);
-	drawBody(xOffset, yOffset, r, g, b);
 	drawLeg(xOffset-5,yOffset,r,g,b); //left
 	drawLeg(xOffset+115,yOffset,r,g,b); //right
 	drawLeftArm(xOffset, yOffset,r,g,b);
 	drawRightArm(xOffset, yOffset, r,g,b);
+	drawBody(xOffset, yOffset, r, g, b);
 }
 
 function drawFlexo(xOffset, yOffset, r, g, b) {
@@ -151,6 +151,15 @@ function drawLeg(x,y,r,g,b){
 }
 
 function drawRightArm(x,y,r,g,b){
+	//arm fill temporary fix FIXME: remove this once fill fixed
+	noStroke();
+	fill(r-40,g-40,b-40);
+	quad(x+357, y+520, x+380,y+775, x+420, y+775, x+400, y+560);
+	quad( x+345,y+475, x+356, y+475, x+400, y+600,x+360, y+605);
+	quad( x+345,y+475, x+306, y+495, x+370, y+550,x+402, y+555);
+	triangle(x+380,y+500, x+386, y+540, x+350, y+495);
+	stroke(0);
+	
 	// arm cup
 	fill(r,g,b);
 	strokeWeight(5);
@@ -158,25 +167,34 @@ function drawRightArm(x,y,r,g,b){
 	let armCupRotation = 29.97;
 	arc(x+330, y+495, 25, 60, armCupRotation, PI+armCupRotation);
 
-	// arm
-	strokeWeight(6);
-	fill(r-40,g-40,b-40);
-	
-	beginShape(); // FIXME: Fix fill issue
-	curve(x-150, y+490,x+340, y+470,x+420, y+775,x+420, y+680);
-	bezier(x+337, y+520,x+370, y+550,x+370, y+680,x+380, y+775);
-	bezier(x+380, y+775,x+370, y+680,x+370, y+550,x+337, y+520);
-	bezier(x+380, y+775,x+390, y+780,x+410, y+780,x+420, y+775);
-	endShape(CLOSE);
-	
 	// fingers
 	fill(r,g,b);
 	strokeWeight(3);
 	rect(x+370,y+809, 17,50, 5);
 	rect(x+410,y+810, 17,50, 5);
 	rect(x+395,y+820, 17,50, 5);
+
+	// hand fill temp fix FIXME: remove this once fill fixed
+	noStroke();
+	fill(r,g,b);
+	quad(x+371, y+780, x+430,y+780, x+440, y+820, x+360, y+820);
+	stroke(0);
+
+	// arm
+	strokeWeight(6);
 	
+	beginShape(); // FIXME: Fix fill issue
+	noFill();
+	curve(x-150, y+490,x+340, y+470,x+420, y+775,x+420, y+680);
+	bezier(x+337, y+520,x+370, y+550,x+370, y+680,x+380, y+775);
+	bezier(x+380, y+775,x+370, y+680,x+370, y+550,x+337, y+520);
+
+	bezier(x+380, y+775,x+390, y+780,x+410, y+780,x+420, y+775);
+	
+	endShape(CLOSE);
+
 	// hand cup
+	fill(r,g,b);
 	strokeWeight(6);
 	beginShape(); // FIXME: Fix fill issue
 	bezier(x+420, y+775,x+430, y+790,x+430, y+780,x+440, y+820);
@@ -194,23 +212,22 @@ function drawRightArm(x,y,r,g,b){
 	arc(x+392, y+688, 40 , 12, 0 , PI);
 }
 function drawLeftArm(x,y,r,g,b){
+
+	//arm fill temporary fix FIXME: remove this once fill fixed
+	noStroke();
+	fill(r-40,g-40,b-40);
+	quad(x+17, y+520, x-20,y+775, x+20, y+775, x+50, y+560);
+	quad( x+50,y+475, x+110, y+475, x+10, y+600,x-8, y+605);
+	quad( x+65,y+475, x+31, y+495, x+3, y+555,x+20, y+555);
+	triangle(x+30,y+500, x-7, y+700, x-7.5, y+595);
+	stroke(0);
+	
 	// arm cup
 	fill(r,g,b);
 	strokeWeight(5);
 
 	let armCupRotation = -29.97;
 	arc(x+76, y+495, 25, 60, armCupRotation, PI+armCupRotation);
-
-	// arm
-	strokeWeight(6);
-	fill(r-40,g-40,b-40);
-
-	beginShape(); // FIXME: Fix fill issue
-	curve(x+550, y+490,x+66, y+470,x-20, y+775,x-20, y+680);
-	bezier(x+69, y+520,x+37, y+550,x+37, y+680,x+20, y+775);
-	// bezier(x+20, y+775,x+10, y+680,x+10, y+550,x-23, y+520);
-	bezier(x+20, y+775,x+10, y+780,x-10, y+780,x-20, y+775);
-	endShape(CLOSE);
 
 	// fingers
 	fill(r,g,b);
@@ -219,7 +236,27 @@ function drawLeftArm(x,y,r,g,b){
 	rect(x+15,y+809, 17,50, 5);
 	rect(x-7,y+820, 17,50, 5);
 
+	// hand fill temp fix FIXME: remove this once fill fixed
+	noStroke();
+	fill(r,g,b);
+	quad(x-30, y+780, x+30,y+780, x+40, y+820, x-43, y+820);
+	stroke(0);
+
+	// arm
+	strokeWeight(6);
+	fill(r-40,g-40,b-40);
+
+	beginShape(); // FIXME: Fix fill issue
+	noFill();
+	curve(x+550, y+490,x+66, y+470,x-20, y+775,x-20, y+680);
+	bezier(x+69, y+520,x+37, y+550,x+37, y+680,x+20, y+775);
+	// bezier(x+20, y+775,x+10, y+680,x+10, y+550,x-23, y+520);
+	bezier(x+20, y+775,x+10, y+780,x-10, y+780,x-20, y+775);
+	endShape(CLOSE);
+
+
 	// hand cup
+	fill(r,g,b);
 	strokeWeight(6);
 	beginShape(); // FIXME: Fix fill issue
 	bezier(x+20, y+775,x+30, y+790,x+30, y+780,x+40, y+820);
