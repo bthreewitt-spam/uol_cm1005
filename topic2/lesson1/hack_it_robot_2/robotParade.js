@@ -232,7 +232,7 @@ function drawLeftArm(x,y,r,g,b){
 	// fingers
 	fill(r,g,b);
 	strokeWeight(3);
-	rect(x-25,y+810, 17,50, 5);
+	rect(x-30,y+810, 17,50, 5);
 	rect(x+15,y+809, 17,50, 5);
 	rect(x-7,y+820, 17,50, 5);
 
