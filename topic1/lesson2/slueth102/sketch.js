@@ -49,7 +49,11 @@ function draw()
 	image(img,0,0);
 
 	//Write your code below here ...
-
+	stroke(75,0,130);
+	rect(237,242,330,689);
+	
+	stroke(255,215,0);
+	rect(1200,212,307,555);
 
 
 	//A helpful mouse pointer
