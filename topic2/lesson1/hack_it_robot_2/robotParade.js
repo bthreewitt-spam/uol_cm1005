@@ -1,14 +1,18 @@
 function setup()
 {
 	//create a canvas for the robot
-	createCanvas(2048, 1024);
+	createCanvas(3096, 2048);
 }
 
 function draw()
 {
-	drawRobot(250, 0,200,200,200);
+	drawBender(200, 50,200,200,200); //Bender
+	drawBender(750, 50,253,214,15); //Gold Bender
+	drawBender(1300, 50,200,200,200); //Flexo
+	
+
 }
-function drawRobot(xOffset, yOffset, r, g, b)
+function drawBender(xOffset, yOffset, r, g, b)
 {
 	// TODO: set x and y to corners
 	drawHead(xOffset, yOffset, r, g, b);
@@ -65,7 +69,7 @@ function drawBody(x, y, r, g, b)
 	//set stroke/fill
 	fill(r,g,b);
 	strokeWeight(6)
-
+	
 	//main body
 	beginShape();
 	vertex(x+330, y+450);
@@ -77,7 +81,7 @@ function drawBody(x, y, r, g, b)
 	//top of body
 	beginShape();
 	bezier(x+75, y+450, x+195, y+475,
-	x+210, y+475, x+330, y+450);
+		x+210, y+475, x+330, y+450);
 	vertex(x+115, y+400);
 	vertex(x+290, y+400);
 	vertex(x+330, y+450);
@@ -86,26 +90,55 @@ function drawBody(x, y, r, g, b)
 	//body door
 	beginShape();
 	bezier(x+260, y+510, x+280, y+510,
-	x+280, y+510, x+280, y+525);
+		x+280, y+510, x+280, y+525);
 	bezier(x+280, y+525, x+266, y+690,
-	x+267, y+700, x+255, y+700);
+		x+267, y+700, x+255, y+700);
 	bezier(x+255, y+ 700, x+140, y+700,
 		x+135, y+710,x+133, y+690);
 	bezier(x+133, y+690, x+120, y+510, 
 		x+120, y+510, x+140, y+511);
 	bezier(x+140, y+511,x+140, y+511,
 		x+140, y+511,x+260, y+510);
-
-	beginContour(); // door handle
-	strokeWeight(3);
-	fill(r+20,g+20,b+20);
-	ellipse(x+255, y+610, 10);
-	endContour();
 	endShape();
-
-	//reset stroke/fill
-	fill(r,g,b);
-	strokeWeight(6)
 	
-	//right arm
+	//door handle
+	strokeWeight(3);
+	fill(r+30,g+30,b+30);
+	ellipse(x+255, y+610, 10);
+	
+	drawLeg(x-5,y,r,g,b);
+	drawLeg(x+115,y,r,g,b);
+}
+
+function drawLeg(x,y,r,g,b){
+	// set stroke
+	strokeWeight(6);
+	
+	//foot cup
+	fill(r,g,b);
+	arc(x+147.5, y+1045, 110, 110, PI, 0, CHORD);
+	
+	//set fill
+	fill(r-40,g-40,b-40);
+
+	//main leg
+	beginShape();
+		vertex(x+170, y+1000)
+		vertex(x+170, y+750);
+		vertex(x+125, y+750);
+		vertex(x+125, y+1000);
+	endShape();
+	
+	//foot cup line
+	arc(x+147.5, y+997, 45, 15, 0, PI);
+	
+	//leg lines
+	noFill();
+	arc(x+147.5, y+794, 45, 15, PI, 0);
+	arc(x+147.5, y+841, 45, 15, PI, 0);
+	arc(x+147.5, y+882, 45, 15, PI, 0);
+	arc(x+147.5, y+927, 45, 15, PI, 0);
+	arc(x+147.5, y+972, 45, 15, PI, 0);
+
+
 }
