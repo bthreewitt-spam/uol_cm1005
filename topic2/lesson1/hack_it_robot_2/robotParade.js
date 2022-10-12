@@ -183,5 +183,15 @@ function drawRightArm(x,y,r,g,b){
 	bezier(x+440, y+820,x+410, y+830,x+390, y+830,x+360, y+820);
 	endShape(CLOSE);
 	
-	// TODO: Add arm lines
+	// arm lines
+	noFill();
+	strokeWeight(4);
+	arc(x+369, y+535, 40 , 12, 0 , PI);
+	arc(x+397, y+740, 40 , 12, 0 , PI);
+	arc(x+385, y+586, 40 , 12, 0 , PI);
+	arc(x+391, y+637, 40 , 12, 0 , PI);
+	arc(x+392, y+688, 40 , 12, 0 , PI);
+}
+function leftArm(x,y,r,g,b){
+	rect(100,200,10,50);
 }
