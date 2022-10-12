@@ -14,6 +14,7 @@ function drawBender(xOffset, yOffset, r, g, b) {
 	drawBody(xOffset, yOffset, r, g, b);
 	drawLeg(xOffset-5,yOffset,r,g,b); //left
 	drawLeg(xOffset+115,yOffset,r,g,b); //right
+	drawLeftArm(xOffset, yOffset,r,g,b);
 	drawRightArm(xOffset, yOffset, r,g,b);
 }
 
@@ -192,6 +193,46 @@ function drawRightArm(x,y,r,g,b){
 	arc(x+391, y+637, 40 , 12, 0 , PI);
 	arc(x+392, y+688, 40 , 12, 0 , PI);
 }
-function leftArm(x,y,r,g,b){
-	rect(100,200,10,50);
+function drawLeftArm(x,y,r,g,b){
+	// arm cup
+	fill(r,g,b);
+	strokeWeight(5);
+
+	let armCupRotation = -29.97;
+	arc(x+76, y+495, 25, 60, armCupRotation, PI+armCupRotation);
+
+	// arm
+	strokeWeight(6);
+	fill(r-40,g-40,b-40);
+
+	beginShape(); // FIXME: Fix fill issue
+	curve(x+550, y+490,x+66, y+470,x-20, y+775,x-20, y+680);
+	bezier(x+69, y+520,x+37, y+550,x+37, y+680,x+20, y+775);
+	// bezier(x+20, y+775,x+10, y+680,x+10, y+550,x-23, y+520);
+	bezier(x+20, y+775,x+10, y+780,x-10, y+780,x-20, y+775);
+	endShape(CLOSE);
+
+	// fingers
+	fill(r,g,b);
+	strokeWeight(3);
+	rect(x-25,y+810, 17,50, 5);
+	rect(x+15,y+809, 17,50, 5);
+	rect(x-7,y+820, 17,50, 5);
+
+	// hand cup
+	strokeWeight(6);
+	beginShape(); // FIXME: Fix fill issue
+	bezier(x+20, y+775,x+30, y+790,x+30, y+780,x+40, y+820);
+	bezier(x-20, y+775,x-30, y+790,x-30, y+780,x-40, y+820);
+	bezier(x+40, y+820,x-10, y+830,x+10, y+830,x-40, y+820);
+	endShape(CLOSE);
+
+// arm lines
+	noFill();
+	strokeWeight(4);
+	arc(x+38, y+535, 40 , 12, 0 , PI);
+	arc(x+7, y+740, 40 , 12, 0 , PI);
+	arc(x+22, y+586, 40 , 12, 0 , PI);
+	arc(x+14, y+637, 40 , 12, 0 , PI);
+	arc(x+10, y+688, 40 , 12, 0 , PI);
 }
