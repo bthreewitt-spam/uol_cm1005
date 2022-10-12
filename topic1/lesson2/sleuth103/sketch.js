@@ -49,7 +49,14 @@ function draw()
 	image(img,0,0);
 
 	//Write your code below here ...
-
+	fill(0,0,255,100);
+	rect(430,246,180,380);
+	
+	fill(138,43,226,100);
+	rect(1119,275,165, 185);
+	
+	fill(139,0,139,100);
+	rect(110,445,203,556);
 
 
 	//A helpful mouse pointer
