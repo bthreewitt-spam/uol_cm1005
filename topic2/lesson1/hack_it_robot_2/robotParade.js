@@ -1,143 +1,106 @@
 function setup()
 {
 	//create a canvas for the robot
-	createCanvas(1000, 700);
+	createCanvas(2048, 1024);
 }
 
 function draw()
 {
+	drawRobot(250, 0,200,200,200);
+}
+function drawRobot(xOffset, yOffset, r, g, b)
+{
+	// TODO: set x and y to corners
+	drawHead(xOffset, yOffset, r, g, b);
+	drawBody(xOffset, yOffset, r, g, b);
+}
+
+function drawHead(x, y, r, g, b)
+{
+	strokeWeight(6);
+
+	//robots head
+	fill(r, g, b);
+	rect(x+115, y+100, 175, 300, 100, 100, 0);
+
+	//tip of antenna
+	fill(r, g, b);
+	ellipse(x+200, y+25, 30, 30); // top
+	quad(x+195, y+40, x+205, y+40, 
+		x+210, y+100, x+190, y+100); // main
+
+	//robots eye cover
+	fill(r, g, b);
+	strokeWeight(4);
+	rect(x+90, y+190, 220, 90, 35); //outer
+	fill(0);
+	strokeWeight(6);
+	rect(x+100, y+200, 200, 70, 30); //inner
+
+	//robots eyes
+	fill(249,250,215);
+	ellipse(x+240, y+235, 75, 70); // right eye
+	rect(x+237, y+235, 5, 5); // right pupil
+	ellipse(x+160, y+235, 75, 70); // left eye
+	rect(x+157, y+235, 5, 5); // left pupil
+
+	//robots mouth
+	strokeWeight(3);
+	rect(x+130, y+320, 140, 60, 15);
 	strokeWeight(2);
 
-	//robot body 1 - delete this code and make your own robot body
-	fill(200);
-	rect(90, 200, 120, 130);
-	rect(70, 200, 30, 100);
-	rect(200, 200, 30, 100);
-	rect(120, 330, 30, 110);
-	rect(150, 330, 30, 110);
+	//horizontal tooth lines
+	line(x+130, y+340, x+270, y+340);
+	line(x+130, y+360, x+270, y+360);
 
-	//robot body 2 - delete this code and make your own robot body
-	rect(390, 200, 120, 130);
-	rect(370, 200, 30, 100);
-	rect(500, 200, 30, 100);
-	rect(420, 330, 30, 110);
-	rect(450, 330, 30, 110);
+	//vertical tooth lines
+	line(x+158, y+320, x+158, y+380);
+	line(x+186, y+320, x+186, y+380);
+	line(x+214, y+320, x+214, y+380);
+	line(x+242, y+320, x+242, y+380);
+}
 
+function drawBody(x, y, r, g, b)
+{
+	fill(r,g,b);
+	strokeWeight(6)
 
-	//robot body 3 - delete this code and make your own robot body
-	rect(690, 200, 120, 130);
-	rect(670, 200, 30, 100);
-	rect(800, 200, 30, 100);
-	rect(720, 330, 30, 110);
-	rect(750, 330, 30, 110);
-
-
-	// !!! Draw the robot heads - You shouldn't need to change this code !!!
-
-	//robot head 1
-	fill(200);
-	rect(100, 100, 100, 100, 10);
-    //robot head 2
-	rect(400, 100, 100, 100, 10);
-    //robot head 3
-	rect(700, 100, 100, 100, 10);
-
-	//ears
-	fill(255, 0, 0);
-
-	//robot ears 1
-	rect(93, 130, 10, 33);
-	rect(197, 130, 10, 33);
-
-	//robot ears 2
-	rect(393, 130, 10, 33);
-	rect(497, 130, 10, 33);
-
-	//robot ears 3
-	rect(693, 130, 10, 33);
-	rect(797, 130, 10, 33);
-
-
-
-	//robots' antennas
-	fill(250, 250, 0);
-    // robot antenna 1
-	ellipse(150, 93, 10, 10);
-    // robot antenna 1
-	ellipse(450, 93, 10, 10);
-    // robot antenna 1
-	ellipse(750, 93, 10, 10);
-
-    //robots' antennas
-	fill(200, 0, 200);
-    // robot antenna 1
-	rect(140, 97, 20, 10);
-    // robot antenna 2
-	rect(440, 97, 20, 10);
-    // robot antenna 3
-	rect(740, 97, 20, 10);
-
-
-	//robot 1's eyes
-	fill(255);
-	ellipse(125, 130, 26, 26);
-	point(125, 130);
-	ellipse(175, 130, 26, 26);
-	point(175, 130);
-
-	//robot 2's eyes
-	ellipse(425, 130, 26, 26);
-	point(425, 130);
-	ellipse(475, 130, 26, 26);
-	point(475, 130);
-
-	//robot 3's eyes
-	ellipse(725, 130, 26, 26);
-	point(725, 130);
-	ellipse(775, 130, 26, 26);
-	point(775, 130);
-
-
-	//robots' noses
-	fill(255, 0, 0);
-    //robot 1 nose
-	triangle(150, 135, 135, 160, 165, 160);
-    //robot 2 nose
-	triangle(450, 135, 435, 160, 465, 160);
-    //robot 3 nose
-	triangle(750, 135, 735, 160, 765, 160);
-
-	//robot 1 mouth
-	noFill();
+	//main robot body
 	beginShape();
-	vertex(128, 175);
-	vertex(136, 185);
-	vertex(142, 175);
-	vertex(150, 185);
-	vertex(158, 175);
-	vertex(166, 185);
-	vertex(174, 175);
+	vertex(x+330, y+450);
+	vertex(x+300, y+750);
+	vertex(x+105, y+750);
+	vertex(x+75, y+450);
 	endShape();
-
-	//robot 2 mouth
+	
+	//top of robot body
 	beginShape();
-	vertex(428, 175);
-	vertex(436, 185);
-	vertex(442, 175);
-	vertex(450, 185);
-	vertex(458, 175);
-	vertex(466, 185);
-	vertex(474, 175);
+	bezier(x+75, y+450, x+195, y+475,
+	x+210, y+475, x+330, y+450);
+	vertex(x+115, y+400);
+	vertex(x+290, y+400);
+	vertex(x+330, y+450);
 	endShape();
-
-	//robot 3 mouth
+	
+	//body door
 	beginShape();
-	vertex(728, 175);
-	vertex(736, 185);
-	vertex(742, 175);
-	vertex(750, 185);
-	vertex(758, 175);
-	vertex(766, 185);
-	vertex(774, 175);
+	bezier(x+260, y+510, x+280, y+510,
+	x+280, y+510, x+280, y+525);
+	bezier(x+280, y+525, x+266, y+690,
+	x+267, y+700, x+255, y+700);
+	bezier(x+255, y+ 700, x+140, y+700,
+		x+135, y+710,x+133, y+690);
+	bezier(x+133, y+690, x+120, y+510, 
+		x+120, y+510, x+140, y+511);
+	bezier(x+140, y+511,x+140, y+511,
+		x+140, y+511,x+260, y+510);
+
+	beginContour(); // door handle
+	strokeWeight(3);
+	fill(r+20,g+20,b+20);
+	ellipse(x+255, y+610, 10);
+	endContour();
 	endShape();
+	
+	//right arm
 }
