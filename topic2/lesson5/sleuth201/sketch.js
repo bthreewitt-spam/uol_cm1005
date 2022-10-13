@@ -43,7 +43,10 @@ function draw()
     noFill();
 
     // write the code to draw around the evidence below
-
+    ellipse(255,230,50,130);
+    ellipse(267,360,110,110);
+    ellipse(564,244,113,120);
+    ellipse(720,244,183,130);
 
 
 
