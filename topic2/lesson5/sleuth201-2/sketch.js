@@ -37,7 +37,7 @@ function draw()
     noFill();
 
     // write the code to connect the blood splatters below
-
+    triangle(605,450,985,330,850,505);
 
     
     //A helpful mouse pointer
