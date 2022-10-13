@@ -39,7 +39,13 @@ function draw()
     noFill();
 
     // write the code to join the bullet holes below
-
+    beginShape()
+    vertex(417,40);
+    vertex(450,203);
+    vertex(390,275);
+    vertex(363,190);
+    vertex(472,52);
+    endShape()
 
 
     //A helpful mouse pointer
