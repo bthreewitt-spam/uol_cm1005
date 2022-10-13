@@ -8,7 +8,7 @@
 //Fredrik Oloffson's Tweets
 
 // --002
-i=0;function setup(){createCanvas(1200,900)}function draw(){for(j=0;j<99;)rect(i++%(1199-j++),int(i/99)%(999-j),i%12,j%16)}// #p5
+//i=0;function setup(){createCanvas(1200,900)}function draw(){for(j=0;j<99;)rect(i++%(1199-j++),int(i/99)%(999-j),i%12,j%16)}// #p5
 
 //--0004
 //s=900,i=j=0;function setup(){createCanvas(s,s);stroke(255,9);fill(9,3)}function draw(){quad(i++,j++,j,i,s-i,i-50,s-j,j);i=(i<<j%4)%1200;j=j%s}// #p5
