@@ -41,9 +41,11 @@ function draw()
     // write the code to join the bullet holes below
     beginShape()
     vertex(417,40);
+    vertex(429,108);
     vertex(450,203);
     vertex(390,275);
     vertex(363,190);
+    vertex(427,107);
     vertex(472,52);
     endShape()
 
