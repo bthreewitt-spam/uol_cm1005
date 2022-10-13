@@ -93,7 +93,7 @@ function draw()
 	fill(30,144,255);
 	stroke(0,100,0);
 	// text("spring,", 9,173);
-	// fill(50,205,50);
+	fill(50,205,50);
 	stroke(107,142,35);
 	// text("long", 133,115);
 	fill(0,128,128);
