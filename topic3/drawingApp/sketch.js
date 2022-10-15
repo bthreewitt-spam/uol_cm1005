@@ -1,15 +1,17 @@
+const BACKGROUND_COLOR = '#191A1A', MENU_COLOR = 0, DEFAULT_BRUSH_COLOR = '#2a84c5';
+let menuX, menuY, menuWidth, menuHeight;
 let colorPicker;
 let sizeUpButton, sizeDownButton, eraseButton, resetButton;
-let brushStroke = 10, lastDrawStroke;
+let maxBrushStroke = 50, defaultBrushStroke = 10, minBrushStroke = 1;
+let brushStroke = defaultBrushStroke, lastDrawStroke;
 let erasing = false;
-const backgroundColor = '#191A1A', menuColor = 0;
-let menuX = 5, menuY = 5, menuWidth, menuHeight;
-//FIXME: 1 Set all coords to %
+//FIXME: 1 set text sizing or switch to pictures
+//TODO: 1.5 add label to color picker
 //TODO: 6 create recent sketch menu
 function setup() {
 	frameRate(60);
 	createCanvas(windowWidth, windowHeight);
-	background(backgroundColor);
+	background(BACKGROUND_COLOR);
 	menuItems();
 }
 function draw() {
@@ -17,13 +19,12 @@ function draw() {
 	brushSizeView();
 	setCursor();
 	if(mouseIsPressed){mouseDragged();} //allows drawing if clicked and not dragged
-	
 }
 function mouseDragged(){
 	if(mouseX < menuWidth + menuX && mouseY < menuHeight + menuY){return;}
 	push();
 	strokeWeight(brushStroke);
-	if(erasing){stroke(backgroundColor);}
+	if(erasing){stroke(BACKGROUND_COLOR);}
 	else{
 		stroke(colorPicker.color()); 
 		noCursor();}
@@ -31,11 +32,14 @@ function mouseDragged(){
 	pop();
 }
 function menuBar(){
-	menuWidth = windowWidth*.06;
-	menuHeight = windowHeight*.4;
+	menuX = xPercent(.5);
+	menuY = yPercent(.5);
+	menuWidth = xPercent(6);
+	menuHeight = yPercent(40);
+	
 	push();
 	noStroke();
-	fill(menuColor);
+	fill(MENU_COLOR);
 	rect(menuX,menuY,menuWidth,menuHeight, 10);
 	pop();
 }
@@ -44,37 +48,37 @@ function menuItems(){
 	//FIXME: 2 set minimum menu size
 	
 	// color picker
-	colorPicker = createColorPicker('#2a84c5');
-	colorPicker.position(10, 15);
-	colorPicker.size(windowWidth*.05,windowHeight*.1);
+	colorPicker = createColorPicker(DEFAULT_BRUSH_COLOR);
+	colorPicker.position(xPercent(1), yPercent(1));
+	colorPicker.size(xPercent(5),yPercent(10));
 
 	// size up button
 	sizeUpButton = createButton('+');
-	sizeUpButton.position(windowWidth*.024, windowHeight*.15);
-	sizeUpButton.size(windowWidth*.02,windowHeight*.03);
-	sizeUpButton.mousePressed(sizeUpButtonPressed);
+	sizeUpButton.position(xPercent(2.5), yPercent(15));
+	sizeUpButton.size(xPercent(2),yPercent(3));
+	sizeUpButton.mousePressed(sizeUpButtonEvent);
 	
 	// size down button
 	sizeDownButton = createButton('-');
-	sizeDownButton.position(windowWidth*.024, windowHeight*.25);
-	sizeDownButton.size(windowWidth*.02,windowHeight*.03);
-	sizeDownButton.mousePressed(sizeDownButtonPressed);
+	sizeDownButton.position(xPercent(2.5), yPercent(25));
+	sizeDownButton.size(xPercent(2),yPercent(3));
+	sizeDownButton.mousePressed(sizeDownButtonEvent);
 
 	// erase button
 	eraseButton = createButton('Erase');
-	eraseButton.position(10, windowHeight*.315);
-	eraseButton.size(windowWidth*.05,windowHeight*.03);
-	eraseButton.mousePressed(eraseButtonPressed);
+	eraseButton.position(xPercent(1), yPercent(30));
+	eraseButton.size(xPercent(5),yPercent(3));
+	eraseButton.mousePressed(eraseButtonEvent);
 
 	// reset button
 	resetButton = createButton('Clear');
-	resetButton.position(10, windowHeight*.35);
-	resetButton.size(windowWidth*.05,windowHeight*.03);
-	resetButton.mousePressed(resetButtonPressed);
+	resetButton.position(xPercent(1), yPercent(35));
+	resetButton.size(xPercent(5),yPercent(3));
+	resetButton.mousePressed(resetButtonEvent);
 }
-async function sizeUpButtonPressed(){
+async function sizeUpButtonEvent(){
 	while(mouseIsPressed) {
-		if (brushStroke < 50) {
+		if (brushStroke < maxBrushStroke) {
 			brushStroke += 1;
 		}
 		await sleep(100);
@@ -83,32 +87,34 @@ async function sizeUpButtonPressed(){
 function brushSizeView(){
 	push();
 	noStroke();
-	if(erasing){fill(backgroundColor);} else{fill(colorPicker.color());}
-	ellipse(windowWidth*.035,windowHeight*.215,brushStroke);
+	if(erasing){fill(BACKGROUND_COLOR);} else{fill(colorPicker.color());}
+	ellipse(xPercent(3.5),yPercent(21.5),brushStroke);
 	pop();
 }
-async function sizeDownButtonPressed() {
+async function sizeDownButtonEvent() {
 	while (mouseIsPressed) {
-		if (brushStroke > 1) {
+		if (brushStroke > minBrushStroke) {
 			brushStroke -= 1;
 		}
 		await sleep(100);
 	}
 }
-function eraseButtonPressed(){ 
+function eraseButtonEvent(){ 
 	if(!erasing){
 		erasing = true;
-		colorPicker.color(backgroundColor); //FIXME: 5 leaves slight tracing in firefox
+		colorPicker.color(BACKGROUND_COLOR); //FIXME: 5 leaves slight tracing in firefox
 		lastDrawStroke = brushStroke;
-		if(brushStroke<26){brushStroke *= 2;}else{brushStroke=60;}
+		if(brushStroke<=maxBrushStroke/2){brushStroke *= 2;}
+		else{brushStroke=maxBrushStroke;}
 		return;
 	}
-	erasing = false
+	erasing = false;
 	brushStroke = lastDrawStroke;
 }
-function resetButtonPressed(){
-	if(erasing){eraseButtonPressed();} // stops erasing
-	background(backgroundColor);
+function resetButtonEvent(){
+	if(erasing){eraseButtonEvent();} // stops erasing
+	brushStroke = defaultBrushStroke;
+	background(BACKGROUND_COLOR);
 }
 function setCursor(){
 	if(mouseX < menuWidth + menuX && mouseY < menuHeight + menuY) {cursor(ARROW);}
@@ -121,3 +127,5 @@ function windowResized() { //FIXME: 3 allow window resizing without reset
 function sleep(ms) {
 	return new Promise(resolve => setTimeout(resolve, ms));
 }
+function xPercent(percent){return percent / 100 * windowWidth;}
+function yPercent(percent){return percent / 100 * windowHeight;}
