@@ -3,10 +3,9 @@ let sizeUpButton, sizeDownButton, eraseButton, resetButton;
 let brushStroke = 10, lastDrawStroke;
 let erasing = false;
 const backgroundColor = '#191A1A', menuColor = 0;
-
+let menuX = 5, menuY = 5, menuWidth, menuHeight;
 //FIXME: 1 Set all coords to %
 //TODO: 6 create recent sketch menu
-
 function setup() {
 	frameRate(60);
 	createCanvas(windowWidth, windowHeight);
@@ -21,7 +20,7 @@ function draw() {
 	
 }
 function mouseDragged(){
-	if(mouseX < windowWidth*.06 + 5 && mouseY < windowHeight*.4 + 5){return;}
+	if(mouseX < menuWidth + menuX && mouseY < menuHeight + menuY){return;}
 	push();
 	strokeWeight(brushStroke);
 	if(erasing){stroke(backgroundColor);}
@@ -32,10 +31,12 @@ function mouseDragged(){
 	pop();
 }
 function menuBar(){
+	menuWidth = windowWidth*.06;
+	menuHeight = windowHeight*.4;
 	push();
 	noStroke();
 	fill(menuColor);
-	rect(5,5,windowWidth*.06,windowHeight*.4, 10);
+	rect(menuX,menuY,menuWidth,menuHeight, 10);
 	pop();
 }
 function menuItems(){ 
@@ -110,7 +111,7 @@ function resetButtonPressed(){
 	background(backgroundColor);
 }
 function setCursor(){
-	if(mouseX < windowWidth*.06 + 5 && mouseY < windowHeight*.4 + 5) {cursor(ARROW);}
+	if(mouseX < menuWidth + menuX && mouseY < menuHeight + menuY) {cursor(ARROW);}
 	else if(erasing){cursor('eraser.cur');}
 	else {cursor(CROSS);}
 }
