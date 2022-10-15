@@ -2,45 +2,46 @@ let colorPicker;
 let sizeUpButton, sizeDownButton, eraseButton, resetButton;
 let brushStroke = 10, lastDrawStroke;
 let erasing = false;
-let backgroundColor = '#191A1A', menuColor = 0;
+const backgroundColor = '#191A1A', menuColor = 0;
 
-//FIXME: Set all coords to %
-//TODO: add recent sketches
+//FIXME: 1 Set all coords to %
+//TODO: 6 create recent sketch menu
 
-function setup()
-{
+function setup() {
+	frameRate(60);
 	createCanvas(windowWidth, windowHeight);
-	cursor(CROSS)
 	background(backgroundColor);
-	menu();
+	menuItems();
 }
-function draw()
-{
-	//allows drawing if clicked and not dragged
-	if(mouseIsPressed){mouseDragged();}
+function draw() {
+	menuBar();
+	brushSizeView();
+	setCursor();
+	if(mouseIsPressed){mouseDragged();} //allows drawing if clicked and not dragged
 	
-	//allows brush size view on menu to size down
+}
+function mouseDragged(){
+	if(mouseX < windowWidth*.06 + 5 && mouseY < windowHeight*.4 + 5){return;}
 	push();
-	noStroke();
-	// resets background of ellipse
-	fill(menuColor);
-	ellipse(windowWidth * .035, windowHeight * .215, brushStroke * 1.2 + 1);
-	// draws brush size view
-	if(erasing){fill(backgroundColor);} else{fill(colorPicker.color());}
-	ellipse(windowWidth*.035,windowHeight*.215,brushStroke);
+	strokeWeight(brushStroke);
+	if(erasing){stroke(backgroundColor);}
+	else{
+		stroke(colorPicker.color()); 
+		noCursor();}
+	line(pwinMouseX, pwinMouseY, mouseX, mouseY);
 	pop();
 }
-function menu(){ 
-	//TODO: Make menu look pretty 
-	//FIXME: set minimum menu size
-	
-	// menu bar
+function menuBar(){
 	push();
-	strokeWeight(3);
+	noStroke();
 	fill(menuColor);
 	rect(5,5,windowWidth*.06,windowHeight*.4, 10);
 	pop();
-
+}
+function menuItems(){ 
+	//TODO: 4 Make menu look pretty 
+	//FIXME: 2 set minimum menu size
+	
 	// color picker
 	colorPicker = createColorPicker('#2a84c5');
 	colorPicker.position(10, 15);
@@ -51,7 +52,7 @@ function menu(){
 	sizeUpButton.position(windowWidth*.024, windowHeight*.15);
 	sizeUpButton.size(windowWidth*.02,windowHeight*.03);
 	sizeUpButton.mousePressed(sizeUpButtonPressed);
-
+	
 	// size down button
 	sizeDownButton = createButton('-');
 	sizeDownButton.position(windowWidth*.024, windowHeight*.25);
@@ -70,17 +71,6 @@ function menu(){
 	resetButton.size(windowWidth*.05,windowHeight*.03);
 	resetButton.mousePressed(resetButtonPressed);
 }
-function mouseDragged(){
-	//makes sure it's not drawing over the menu FIXME: can still draw over menu in some cases
-	if(mouseX < windowWidth*.06 + 5 && mouseY < windowHeight*.4 + 5 
-		&& pmouseX < windowWidth*.06 + 5 && pmouseY < windowHeight*.4 + 5) {return;} 
-	
-	strokeWeight(brushStroke);
-	if(erasing){stroke(backgroundColor);}
-	else{stroke(colorPicker.color());}
-	
-	line(pwinMouseX, pwinMouseY, mouseX, mouseY);
-}
 async function sizeUpButtonPressed(){
 	while(mouseIsPressed) {
 		if (brushStroke < 50) {
@@ -88,6 +78,13 @@ async function sizeUpButtonPressed(){
 		}
 		await sleep(100);
 	}
+}
+function brushSizeView(){
+	push();
+	noStroke();
+	if(erasing){fill(backgroundColor);} else{fill(colorPicker.color());}
+	ellipse(windowWidth*.035,windowHeight*.215,brushStroke);
+	pop();
 }
 async function sizeDownButtonPressed() {
 	while (mouseIsPressed) {
@@ -100,27 +97,24 @@ async function sizeDownButtonPressed() {
 function eraseButtonPressed(){ 
 	if(!erasing){
 		erasing = true;
-		cursor('eraser.cur');
-		colorPicker.color(backgroundColor); //FIXME: leaves slight tracing in firefox
+		colorPicker.color(backgroundColor); //FIXME: 5 leaves slight tracing in firefox
 		lastDrawStroke = brushStroke;
 		if(brushStroke<26){brushStroke *= 2;}else{brushStroke=60;}
 		return;
 	}
 	erasing = false
-	cursor(CROSS);
-	
-	push();//fixes background issue after stop erasing
-	noStroke();
-	fill(menuColor);
-	ellipse(windowWidth * .035, windowHeight * .215, brushStroke * 1.2 + 1);
-	pop();
-	
 	brushStroke = lastDrawStroke;
 }
 function resetButtonPressed(){
-	window.location.reload();
+	if(erasing){eraseButtonPressed();} // stops erasing
+	background(backgroundColor);
 }
-function windowResized() { //FIXME: allow window resizing without reset
+function setCursor(){
+	if(mouseX < windowWidth*.06 + 5 && mouseY < windowHeight*.4 + 5) {cursor(ARROW);}
+	else if(erasing){cursor('eraser.cur');}
+	else {cursor(CROSS);}
+}
+function windowResized() { //FIXME: 3 allow window resizing without reset
 	window.location.reload();
 }
 function sleep(ms) {
