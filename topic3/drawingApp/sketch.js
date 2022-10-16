@@ -2,11 +2,11 @@ const BACKGROUND_COLOR = '#2D2F2F', MENU_COLOR = '#191A1A', DEFAULT_BRUSH_COLOR 
 let menuX, menuY, menuWidth, menuHeight;
 let colorPicker, colorPickerLabel;
 let sizeUpButton, sizeDownButton, eraseButton, clearButton;
-let maxBrushStroke = 50, defaultBrushStroke = 10, minBrushStroke = 1;
-let brushStroke = defaultBrushStroke, lastDrawStroke;
-let erasing = false;
-//TODO: 1.5 add label to color picker
-//TODO: 6 create recent sketch menu
+const MAX_BRUSH_STROKE = 50, DEFAULT_BRUSH_STROKE = 10, MIN_BRUSH_STROKE = 1;
+let brushStroke = DEFAULT_BRUSH_STROKE, lastDrawStroke;
+let currently_erasing = false;
+
+//TODO: create recent sketch menu
 function setup() {
 	frameRate(60);
 	createCanvas(windowWidth, windowHeight);
@@ -17,13 +17,13 @@ function draw() {
 	menuBar();
 	brushSizeView();
 	setCursor();
-	if(mouseIsPressed){mouseDragged();} //allows drawing if clicked and not dragged
+	if(mouseIsPressed){mouseDragged();} //allows drawing if clicked and not just dragged
 }
 function mouseDragged(){
 	if(mouseX < menuWidth + menuX && mouseY < menuHeight + menuY){return;}
 	push();
 	strokeWeight(brushStroke);
-	if(erasing){stroke(BACKGROUND_COLOR);}
+	if(currently_erasing){stroke(BACKGROUND_COLOR);}
 	else{
 		stroke(colorPicker.color()); 
 		noCursor();}
@@ -43,7 +43,7 @@ function menuBar(){
 	pop();
 }
 function menuItems(){ 
-	//TODO: 4 Make menu look pretty
+	//TODO: Make menu look pretty
 	
 	// color picker label
 	colorPickerLabel = createImg('assets/colorPickerLabel.png', 'color picker');
@@ -81,7 +81,7 @@ function menuItems(){
 }
 async function sizeUpButtonEvent(){
 	while(mouseIsPressed) {
-		if (brushStroke < maxBrushStroke) {
+		if (brushStroke < MAX_BRUSH_STROKE) {
 			brushStroke += 1;
 		}
 		await sleep(100);
@@ -90,38 +90,38 @@ async function sizeUpButtonEvent(){
 function brushSizeView(){
 	push();
 	noStroke();
-	if(erasing){fill(BACKGROUND_COLOR);} else{fill(colorPicker.color());}
+	if(currently_erasing){fill(BACKGROUND_COLOR);} else{fill(colorPicker.color());}
 	ellipse(xPercent(3.5),yPercent(21.5),brushStroke);
 	pop();
 }
 async function sizeDownButtonEvent() {
 	while (mouseIsPressed) {
-		if (brushStroke > minBrushStroke) {
+		if (brushStroke > MIN_BRUSH_STROKE) {
 			brushStroke -= 1;
 		}
 		await sleep(100);
 	}
 }
 function eraseButtonEvent(){ 
-	if(!erasing){
-		erasing = true;
-		colorPicker.color(BACKGROUND_COLOR); //FIXME: leaves slight tracing in firefox
+	if(!currently_erasing){
+		currently_erasing = true;
+		colorPicker.color(BACKGROUND_COLOR);
 		lastDrawStroke = brushStroke;
-		if(brushStroke<=maxBrushStroke/2){brushStroke *= 2;}
-		else{brushStroke=maxBrushStroke;}
+		if(brushStroke<=MAX_BRUSH_STROKE/2){brushStroke *= 2;}
+		else{brushStroke=MAX_BRUSH_STROKE;}
 		return;
 	}
-	erasing = false;
+	currently_erasing = false;
 	brushStroke = lastDrawStroke;
 }
 function clearButtonEvent(){
-	if(erasing){eraseButtonEvent();} // stops erasing
-	brushStroke = defaultBrushStroke;
+	if(currently_erasing){eraseButtonEvent();} // stops erasing
+	brushStroke = DEFAULT_BRUSH_STROKE;
 	background(BACKGROUND_COLOR);
 }
 function setCursor(){
 	if(mouseX < menuWidth + menuX && mouseY < menuHeight + menuY) {cursor(ARROW);}
-	else if(erasing){cursor('assets/eraser.cur');}
+	else if(currently_erasing){cursor('assets/eraser.cur');}
 	else {cursor(CROSS);}
 }
 function windowResized() { //FIXME: allow window resizing without reset
