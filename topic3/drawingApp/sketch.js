@@ -34,7 +34,7 @@ function menuBar(){
 	menuX = xPercent(.5);
 	menuY = yPercent(.5);
 	menuWidth = xPercent(6);
-	menuHeight = yPercent(40);
+	menuHeight = yPercent(34);
 	
 	push();
 	noStroke();
@@ -57,25 +57,25 @@ function menuItems(){
 
 	// size up button	
 	sizeUpButton = createImg('assets/plus.png', 'size up');
-	sizeUpButton.position(xPercent(2.5), yPercent(15));
+	sizeUpButton.position(xPercent(2.5), yPercent(12));
 	sizeUpButton.size(xPercent(2),yPercent(2.75));
 	sizeUpButton.mousePressed(sizeUpButtonEvent);
 	
 	// size down button
 	sizeDownButton = createImg('assets/minus.png', 'size down');
-	sizeDownButton.position(xPercent(2.5), yPercent(25));
+	sizeDownButton.position(xPercent(2.5), yPercent(22));
 	sizeDownButton.size(xPercent(2),yPercent(2.75));
 	sizeDownButton.mousePressed(sizeDownButtonEvent);
 
 	// erase button
 	eraseButton = createImg('assets/erase.png', 'Erase');
-	eraseButton.position(xPercent(1), yPercent(30));
+	eraseButton.position(xPercent(1), yPercent(27));
 	eraseButton.size(xPercent(5),yPercent(2.5));
 	eraseButton.mousePressed(eraseButtonEvent);
 
 	// clear button
 	clearButton = createImg('assets/reset.png','Clear');
-	clearButton.position(xPercent(1), yPercent(35));
+	clearButton.position(xPercent(1), yPercent(30.5));
 	clearButton.size(xPercent(5),yPercent(2.5));
 	clearButton.mousePressed(clearButtonEvent);
 }
@@ -91,7 +91,7 @@ function brushSizeView(){
 	push();
 	noStroke();
 	if(currently_erasing){fill(BACKGROUND_COLOR);} else{fill(colorPicker.color());}
-	ellipse(xPercent(3.5),yPercent(21.5),brushStroke);
+	ellipse(xPercent(3.5),yPercent(18.5),brushStroke);
 	pop();
 }
 async function sizeDownButtonEvent() {
