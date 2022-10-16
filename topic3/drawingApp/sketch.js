@@ -1,4 +1,4 @@
-const BACKGROUND_COLOR = '#191A1A', MENU_COLOR = 0, DEFAULT_BRUSH_COLOR = '#00';
+const BACKGROUND_COLOR = '#2D2F2F', MENU_COLOR = '#191A1A', DEFAULT_BRUSH_COLOR = '#3584E4';
 let menuX, menuY, menuWidth, menuHeight;
 let colorPicker, colorPickerLabel;
 let sizeUpButton, sizeDownButton, eraseButton, clearButton;
