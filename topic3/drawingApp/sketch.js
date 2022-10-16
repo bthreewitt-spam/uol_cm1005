@@ -127,8 +127,6 @@ function setCursor(){
 function windowResized() { //FIXME: allow window resizing without reset
 	window.location.reload();
 }
-function sleep(ms) {
-	return new Promise(resolve => setTimeout(resolve, ms));
-}
+function sleep(ms) {return new Promise(resolve => setTimeout(resolve, ms));}
 function xPercent(percent){return percent / 100 * windowWidth;}
 function yPercent(percent){return percent / 100 * windowHeight;}
