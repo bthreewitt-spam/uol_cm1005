@@ -1,6 +1,6 @@
 const BACKGROUND_COLOR = '#191A1A', MENU_COLOR = 0, DEFAULT_BRUSH_COLOR = '#00';
 let menuX, menuY, menuWidth, menuHeight;
-let colorPicker;
+let colorPicker, colorPickerLabel;
 let sizeUpButton, sizeDownButton, eraseButton, clearButton;
 let maxBrushStroke = 50, defaultBrushStroke = 10, minBrushStroke = 1;
 let brushStroke = defaultBrushStroke, lastDrawStroke;
@@ -45,10 +45,15 @@ function menuBar(){
 function menuItems(){ 
 	//TODO: 4 Make menu look pretty
 	
+	// color picker label
+	colorPickerLabel = createImg('assets/colorPickerLabel.png', 'color picker');
+	colorPickerLabel.position(xPercent(1), yPercent(2));
+	colorPickerLabel.size(xPercent(5), yPercent(8));
+	
 	// color picker
 	colorPicker = createColorPicker(DEFAULT_BRUSH_COLOR);
-	colorPicker.position(xPercent(1), yPercent(1));
-	colorPicker.size(xPercent(5),yPercent(10));
+	colorPicker.position(xPercent(1.25), yPercent(4.5));
+	colorPicker.size(xPercent(4.5),yPercent(5));
 
 	// size up button	
 	sizeUpButton = createImg('assets/plus.png', 'size up');
@@ -100,7 +105,7 @@ async function sizeDownButtonEvent() {
 function eraseButtonEvent(){ 
 	if(!erasing){
 		erasing = true;
-		colorPicker.color(BACKGROUND_COLOR); //FIXME: 5 leaves slight tracing in firefox
+		colorPicker.color(BACKGROUND_COLOR); //FIXME: leaves slight tracing in firefox
 		lastDrawStroke = brushStroke;
 		if(brushStroke<=maxBrushStroke/2){brushStroke *= 2;}
 		else{brushStroke=maxBrushStroke;}
@@ -119,8 +124,8 @@ function setCursor(){
 	else if(erasing){cursor('assets/eraser.cur');}
 	else {cursor(CROSS);}
 }
-function windowResized() { //FIXME: 3 allow window resizing without reset
-	menuItems();
+function windowResized() { //FIXME: allow window resizing without reset
+	window.location.reload();
 }
 function sleep(ms) {
 	return new Promise(resolve => setTimeout(resolve, ms));
