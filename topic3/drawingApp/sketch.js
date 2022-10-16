@@ -1,11 +1,10 @@
-const BACKGROUND_COLOR = '#191A1A', MENU_COLOR = 0, DEFAULT_BRUSH_COLOR = '#2a84c5';
+const BACKGROUND_COLOR = '#191A1A', MENU_COLOR = 0, DEFAULT_BRUSH_COLOR = '#00';
 let menuX, menuY, menuWidth, menuHeight;
 let colorPicker;
-let sizeUpButton, sizeDownButton, eraseButton, resetButton;
+let sizeUpButton, sizeDownButton, eraseButton, clearButton;
 let maxBrushStroke = 50, defaultBrushStroke = 10, minBrushStroke = 1;
 let brushStroke = defaultBrushStroke, lastDrawStroke;
 let erasing = false;
-//FIXME: 1 set text sizing or switch to pictures
 //TODO: 1.5 add label to color picker
 //TODO: 6 create recent sketch menu
 function setup() {
@@ -44,37 +43,36 @@ function menuBar(){
 	pop();
 }
 function menuItems(){ 
-	//TODO: 4 Make menu look pretty 
-	//FIXME: 2 set minimum menu size
+	//TODO: 4 Make menu look pretty
 	
 	// color picker
 	colorPicker = createColorPicker(DEFAULT_BRUSH_COLOR);
 	colorPicker.position(xPercent(1), yPercent(1));
 	colorPicker.size(xPercent(5),yPercent(10));
 
-	// size up button
-	sizeUpButton = createButton('+');
+	// size up button	
+	sizeUpButton = createImg('assets/plus.png', 'size up');
 	sizeUpButton.position(xPercent(2.5), yPercent(15));
-	sizeUpButton.size(xPercent(2),yPercent(3));
+	sizeUpButton.size(xPercent(2),yPercent(2.75));
 	sizeUpButton.mousePressed(sizeUpButtonEvent);
 	
 	// size down button
-	sizeDownButton = createButton('-');
+	sizeDownButton = createImg('assets/minus.png', 'size down');
 	sizeDownButton.position(xPercent(2.5), yPercent(25));
-	sizeDownButton.size(xPercent(2),yPercent(3));
+	sizeDownButton.size(xPercent(2),yPercent(2.75));
 	sizeDownButton.mousePressed(sizeDownButtonEvent);
 
 	// erase button
-	eraseButton = createButton('Erase');
+	eraseButton = createImg('assets/erase.png', 'Erase');
 	eraseButton.position(xPercent(1), yPercent(30));
-	eraseButton.size(xPercent(5),yPercent(3));
+	eraseButton.size(xPercent(5),yPercent(2.5));
 	eraseButton.mousePressed(eraseButtonEvent);
 
-	// reset button
-	resetButton = createButton('Clear');
-	resetButton.position(xPercent(1), yPercent(35));
-	resetButton.size(xPercent(5),yPercent(3));
-	resetButton.mousePressed(resetButtonEvent);
+	// clear button
+	clearButton = createImg('assets/reset.png','Clear');
+	clearButton.position(xPercent(1), yPercent(35));
+	clearButton.size(xPercent(5),yPercent(2.5));
+	clearButton.mousePressed(clearButtonEvent);
 }
 async function sizeUpButtonEvent(){
 	while(mouseIsPressed) {
@@ -111,18 +109,18 @@ function eraseButtonEvent(){
 	erasing = false;
 	brushStroke = lastDrawStroke;
 }
-function resetButtonEvent(){
+function clearButtonEvent(){
 	if(erasing){eraseButtonEvent();} // stops erasing
 	brushStroke = defaultBrushStroke;
 	background(BACKGROUND_COLOR);
 }
 function setCursor(){
 	if(mouseX < menuWidth + menuX && mouseY < menuHeight + menuY) {cursor(ARROW);}
-	else if(erasing){cursor('eraser.cur');}
+	else if(erasing){cursor('assets/eraser.cur');}
 	else {cursor(CROSS);}
 }
 function windowResized() { //FIXME: 3 allow window resizing without reset
-	window.location.reload();
+	menuItems();
 }
 function sleep(ms) {
 	return new Promise(resolve => setTimeout(resolve, ms));
