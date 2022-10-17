@@ -13,9 +13,10 @@ let plus = {imageLoc:'assets/plus.svg', max: 5,
 let sky = {r:0, g:204, b:254};
 let sun = {path:92, diameter:8, //as % of width 
 			r:255, g:255, b:0};
-let moon = {path:sun.path, diameter:sun.diameter, 
+let moon = {path:sun.path, diameter:sun.diameter,
 			r:200, g:200, b:255};
-let ground = {x:0, y:65, 
+let cloud = {x:50, y:10, width:7.75, height:4.75, fill:254};
+let ground = {x:0, y:65,
 			r:0, g:200, b:0};
 
 
@@ -32,6 +33,7 @@ function draw(){
 	background(sky.r, sky.g, sky.b);
 	sun.draw();
 	moon.draw();
+	cloud.draw(0,5, 0, 0);
 	ground.draw();
 
 	timeMenu.display();
@@ -66,6 +68,39 @@ moon.draw = () => {
 		PI + (time.current - 12) / 12 * PI,
 		PI + (time.current - 12) / 12 * PI + .0001);
 	pop();
+}
+cloud.draw = (xOffset,yOffset,widthOffset, heightOffset) => {
+	fill(cloud.fill);
+	//main
+	ellipse(xPercent(xOffset + cloud.x),
+		yPercent(yOffset + cloud.y+3.25),
+		xPercent(widthOffset + cloud.width),
+		yPercent(heightOffset + cloud.height - .25));
+	//bottom left
+	ellipse(xPercent(xOffset + cloud.x - 1.25),
+		yPercent(yOffset + cloud.y+3.5),
+		xPercent(widthOffset + cloud.width - 4.25),
+		yPercent(heightOffset + cloud.height));
+	//bottom right
+	ellipse(xPercent(xOffset + cloud.x + 1.25),
+		yPercent(yOffset + cloud.y + 4.6),
+		xPercent(widthOffset + cloud.width - 4),
+		yPercent(heightOffset + cloud.height -2.5));
+	//upper middle corners
+	rect(xPercent(xOffset + cloud.x - 3.5),
+		yPercent(yOffset + cloud.y + 1),
+		xPercent(widthOffset + cloud.width - .75) ,
+		yPercent(heightOffset + cloud.height - .75),15);
+	//top sides
+	rect(xPercent(xOffset + cloud.x - 2.25),
+		yPercent(yOffset + cloud.y),
+		xPercent(widthOffset + cloud.width - 3.25),
+		yPercent(heightOffset + cloud.height - .75), 18);
+	//top center
+	ellipse(xPercent(xOffset + cloud.x),
+		yPercent(yOffset + cloud.y + 1),
+		xPercent(widthOffset + cloud.width - 5.25),
+		yPercent(heightOffset + cloud.height - 1.25));
 }
 function setColor(){
 	if (time.current <= 7){ //sunrise
@@ -117,6 +152,8 @@ timeMenu.buttons = () =>{
 	pause.button.position(xPercent(pause.x), yPercent(pause.y));
 	pause.button.size(xPercent(pause.width), yPercent(pause.height));
 	pause.button.mousePressed(pause.event);
+	
+	//TODO: Add separator
 
 	minus.button = createImg(minus.imageLoc, 'minus');
 	minus.button.position(xPercent(minus.x), yPercent(minus.y));
