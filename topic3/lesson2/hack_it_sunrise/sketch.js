@@ -1,4 +1,10 @@
-let time = {current: 0, waitMS: 500, multiplier: 1, framesPer:120};
+let time = {current: 0, waitMS: 500, multiplier: 1, framesPer:20};
+let timeMenu = {x:88, y:94, width:10, height:4,
+				r:30, g:40, b:40};
+let play = {imageLoc:'assets/play.svg',
+			x:88.5, y:95, width:2, height:2};
+let pause = {imageLoc:'assets/pause.svg', state: false,
+	x:88.5, y:95, width:2, height:2};
 
 //NOTE: Color of elements at 6
 //NOTE: All coordinate numbers are percentages of window width/height
@@ -6,13 +12,14 @@ let sky = {r:0, g:204, b:254};
 let sun = {path:92, diameter:8, //as % of width 
 			r:255, g:255, b:0};
 let moon = {path:sun.path, diameter:sun.diameter, 
-			r:255, g:255, b:255}; //TODO: 
+			r:255, g:255, b:255}; //TODO: set moon color
 let ground = {x:0, y:65, 
 			r:0, g:200, b:0};
 
 
 function setup(){
 	createCanvas(windowWidth, windowHeight);
+	frameRate(240);
 	noStroke();
 	noLoop();
 }
@@ -24,7 +31,8 @@ function draw(){
 	moon.draw();
 	ground.draw();
 
-	advanceTime();
+	timeMenu.display();
+	time.advance();
 }
 
 
@@ -63,16 +71,34 @@ function setColor(){
 	
 }
 
-async function advanceTime() {
-	// TODO: create time menu
+timeMenu.display = () =>{
+	fill(timeMenu.r, timeMenu.g, timeMenu.b);
+	rect(xPercent(timeMenu.x), yPercent(timeMenu.y), xPercent(timeMenu.width), yPercent(timeMenu.height), 8);
 	
-	console.log(time.current);
-	await sleep((time.waitMS / time.multiplier)/time.framesPer);
-	
-	time.current += 1/time.framesPer;
-	if (time.current > 24) {time.current = 0;}
-	
-	redraw();
+		pause.button = createImg(pause.imageLoc, 'pause');
+		pause.button.position(xPercent(pause.x), yPercent(pause.y));
+		pause.button.size(xPercent(pause.width), yPercent(pause.height));
+		pause.button.mousePressed(pause.event);
+
+}
+
+pause.event= () => {
+	if(!pause.state) {
+		pause.state = true;
+		loop();
+		return;
+	}
+	pause.state = false;
+	noLoop();
+}
+time.advance= async () => { //FIXME: inaccurate to ms
+	if(!pause.state) {
+		console.log(time.current);
+		await sleep((time.waitMS / time.multiplier / time.framesPer));
+		time.current += 1 / time.framesPer;
+		if (time.current > 24) {time.current = 0;}
+		redraw();
+	}
 }
 
 function sleep(ms) {return new Promise(resolve => setTimeout(resolve, ms));}
