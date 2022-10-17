@@ -1,10 +1,12 @@
 let time = {current: 0, waitMS: 500, multiplier: 1, framesPer:20};
 let timeMenu = {x:88, y:94, width:10, height:4,
 				r:30, g:40, b:40};
-let play = {imageLoc:'assets/play.svg',
-			x:88.5, y:95, width:2, height:2};
 let pause = {imageLoc:'assets/pause.svg', state: false,
 	x:88.5, y:95, width:2, height:2};
+let minus = {imageLoc:'assets/minus.svg', min: .1,
+	x:91, y:95, width:2, height:2};
+let plus = {imageLoc:'assets/plus.svg', max: 5,
+	x:95, y:95, width:2, height:2};
 
 //NOTE: Color of elements at 6
 //NOTE: All coordinate numbers are percentages of window width/height
@@ -22,6 +24,7 @@ function setup(){
 	frameRate(240);
 	noStroke();
 	noLoop();
+	timeMenu.buttons();
 }
 function draw(){
 	setColor();
@@ -75,13 +78,33 @@ timeMenu.display = () =>{
 	fill(timeMenu.r, timeMenu.g, timeMenu.b);
 	rect(xPercent(timeMenu.x), yPercent(timeMenu.y), xPercent(timeMenu.width), yPercent(timeMenu.height), 8);
 	
-		pause.button = createImg(pause.imageLoc, 'pause');
-		pause.button.position(xPercent(pause.x), yPercent(pause.y));
-		pause.button.size(xPercent(pause.width), yPercent(pause.height));
-		pause.button.mousePressed(pause.event);
+	
+	
+	push();
+	fill(255);
+	textStyle(BOLD);
+	text((int)(Math.round(time.multiplier * 100))/100.0, 
+		xPercent(93.5), yPercent(96.5));
+	pop();
 
+	
 }
+timeMenu.buttons = () =>{
+	pause.button = createImg(pause.imageLoc, 'pause');
+	pause.button.position(xPercent(pause.x), yPercent(pause.y));
+	pause.button.size(xPercent(pause.width), yPercent(pause.height));
+	pause.button.mousePressed(pause.event);
 
+	minus.button = createImg(minus.imageLoc, 'minus');
+	minus.button.position(xPercent(minus.x), yPercent(minus.y));
+	minus.button.size(xPercent(minus.width), yPercent(minus.height));
+	minus.button.mousePressed(minus.event);
+
+	plus.button = createImg(plus.imageLoc, 'plus');
+	plus.button.position(xPercent(plus.x), yPercent(plus.y));
+	plus.button.size(xPercent(plus.width), yPercent(plus.height));
+	plus.button.mousePressed(plus.event);
+}
 pause.event= () => {
 	if(!pause.state) {
 		pause.state = true;
@@ -90,6 +113,22 @@ pause.event= () => {
 	}
 	pause.state = false;
 	noLoop();
+}
+minus.event= async () => {
+	while (mouseIsPressed) {
+		if (time.multiplier > minus.min * 2) {
+			time.multiplier -= .1;
+		}
+		await sleep(300);
+	}
+}
+plus.event= async () => {
+	while (mouseIsPressed) {
+		if (time.multiplier < plus.max - .1) {
+			time.multiplier += .1;
+		}
+		await sleep(300);
+	}
 }
 time.advance= async () => { //FIXME: inaccurate to ms
 	if(!pause.state) {
