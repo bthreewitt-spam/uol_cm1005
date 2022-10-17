@@ -78,13 +78,15 @@ timeMenu.display = () =>{
 	fill(timeMenu.r, timeMenu.g, timeMenu.b);
 	rect(xPercent(timeMenu.x), yPercent(timeMenu.y), xPercent(timeMenu.width), yPercent(timeMenu.height), 8);
 	
-	
-	
 	push();
 	fill(255);
 	textStyle(BOLD);
+	
+	let x = 93.25;
+	let y = 96.5;
+	if(time.multiplier % 1 === 0){x += .4}
 	text((int)(Math.round(time.multiplier * 100))/100.0, 
-		xPercent(93.5), yPercent(96.5));
+		xPercent(x), yPercent(y));
 	pop();
 
 	
