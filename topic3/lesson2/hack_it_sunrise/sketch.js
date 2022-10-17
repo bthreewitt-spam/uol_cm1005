@@ -1,7 +1,7 @@
 let time = {current: 0, waitMS: 500, multiplier: 1, framesPer:20};
 let timeMenu = {x:88, y:94, width:10, height:4,
 				r:30, g:40, b:40, a:130};
-let pause = {imageLoc:'assets/pause.svg', state: false,
+let pauseButton = {imageLoc:'assets/pause.svg', state: false,
 	x:88.5, y:95, width:2, height:2};
 let minus = {imageLoc:'assets/minus.svg', min: .1,
 	x:91, y:95, width:2, height:2};
@@ -15,7 +15,8 @@ let sun = {path:92, diameter:8, //as % of width
 			r:255, g:255, b:0};
 let moon = {path:sun.path, diameter:sun.diameter,
 			r:200, g:200, b:255};
-let cloud = {x:50, y:10, width:7.75, height:4.75, fill:254};
+let cloud = {x:50, y:10, width:7.75, height:4.75, fill:254, 
+	amount:null, onScreen: 0, yOffset:[], xPos:[]};
 let ground = {x:0, y:65,
 			r:0, g:200, b:0};
 
@@ -33,9 +34,8 @@ function draw(){
 	background(sky.r, sky.g, sky.b);
 	sun.draw();
 	moon.draw();
-	cloud.draw(0,5, 0, 0);
 	ground.draw();
-
+	cloud.random(1,50,15);
 	timeMenu.display();
 	time.advance();
 }
@@ -69,6 +69,31 @@ moon.draw = () => {
 		PI + (time.current - 12) / 12 * PI + .0001);
 	pop();
 }
+cloud.random = (min, max, ySpread) => {//FIXME
+	if(cloud.onScreen < cloud.amount || cloud.amount === null) {
+		cloud.amount = random(min, max);
+		if(cloud.onScreen < cloud.amount) {
+			for (let i = 0; i <= cloud.amount - cloud.onScreen; i++) {
+				cloud.yOffset.push(random(-ySpread / 2, ySpread / 2));
+				cloud.xPos.push(random(-104,-54));
+				cloud.draw(cloud.xPos[i], cloud.yOffset[i], 
+					0, 0);
+				cloud.onScreen += 10;
+			}
+		}
+		return;
+	}
+	
+	for(let i = 0; i < cloud.xPos.length; i++){
+		if(cloud.xPos[i] > 54){
+			cloud.xPos.pop(cloud.xPos[i]);
+			cloud.yOffset.pop(cloud.yOffset[i]);
+			cloud.onScreen -= 1;
+		} else{
+			cloud.xPos[i] += 20;
+		}
+	}
+} 
 cloud.draw = (xOffset,yOffset,widthOffset, heightOffset) => {
 	fill(cloud.fill);
 	//main
@@ -103,36 +128,47 @@ cloud.draw = (xOffset,yOffset,widthOffset, heightOffset) => {
 		yPercent(heightOffset + cloud.height - 1.25));
 }
 function setColor(){
-	if (time.current <= 7){ //sunrise
-		sky.g = min(sky.g + .9 * time.multiplier, 204);
-		sky.b = min(sky.b + .9 * time.multiplier, 254);
-		
-		sun.g = min( sun.g + .75 * time.multiplier, 255);
+	if(!pauseButton.state) {
+		if (time.current <= 7) { //sunrise
+			sky.g = min(sky.g + .9 * time.multiplier, 204);
+			sky.b = min(sky.b + .9 * time.multiplier, 254);
 
-		ground.g = min(ground.g + .5 * time.multiplier, 255);
-		return;
-	} if (time.current <= 11){ //sunset
-		sky.g = max(sky.g - .5 * time.multiplier, 100);
-		sky.b = max(sky.b - .5 * time.multiplier, 155);
-		
-		sun.g = max(sun.g - .8 * time.multiplier, 150);
-		
-		ground.g = max(ground.g -= .3 * time.multiplier, 100);
-		return;
-	} if(time.current <= 19){ //moonrise
-		sky.g = max(sky.g - .8 * time.multiplier, 20); 
-		sky.b = max(sky.b - .87 * time.multiplier, 50);
-		ground.g = max(ground.g - .9 * time.multiplier, 35);
-	} else{ //moon-set
-		sky.g += .5 * time.multiplier; 
-		sky.b += .3 * time.multiplier;
-		
-		ground.g += .3 * time.multiplier;
+			sun.g = min(sun.g + .75 * time.multiplier, 255);
+
+			ground.g = min(ground.g + .5 * time.multiplier, 255);
+			return;
+		}
+		if (time.current <= 11) { //sunset
+			sky.g = max(sky.g - .5 * time.multiplier, 100);
+			sky.b = max(sky.b - .5 * time.multiplier, 155);
+
+			sun.g = max(sun.g - .8 * time.multiplier, 150);
+
+			ground.g = max(ground.g -= .3 * time.multiplier, 100);
+			return;
+		}
+		if (time.current <= 19) { //moonrise
+			sky.g = max(sky.g - .8 * time.multiplier, 20);
+			sky.b = max(sky.b - .87 * time.multiplier, 50);
+			ground.g = max(ground.g - .9 * time.multiplier, 35);
+		} else { //moon-set
+			sky.g += .5 * time.multiplier;
+			sky.b += .3 * time.multiplier;
+
+			ground.g += .3 * time.multiplier;
+		}
 	}
 }
 timeMenu.display = () =>{
 	fill(timeMenu.r, timeMenu.g, timeMenu.b, timeMenu.a);
 	rect(xPercent(timeMenu.x), yPercent(timeMenu.y), xPercent(timeMenu.width), yPercent(timeMenu.height), 8);
+
+	//divider
+	push();
+	stroke(255);
+	strokeWeight(1.5);
+	line(xPercent(90.75), yPercent(94.75), xPercent(90.75), yPercent(97.25));
+	pop();
 	
 	push();
 	fill(255);
@@ -148,13 +184,13 @@ timeMenu.display = () =>{
 	
 }
 timeMenu.buttons = () =>{
-	pause.button = createImg(pause.imageLoc, 'pause');
-	pause.button.position(xPercent(pause.x), yPercent(pause.y));
-	pause.button.size(xPercent(pause.width), yPercent(pause.height));
-	pause.button.mousePressed(pause.event);
+	pauseButton.button = createImg(pauseButton.imageLoc, 'pauseButton');
+	pauseButton.button.position(xPercent(pauseButton.x), yPercent(pauseButton.y));
+	pauseButton.button.size(xPercent(pauseButton.width), yPercent(pauseButton.height));
+	pauseButton.button.mousePressed(pauseButton.event);
 	
-	//TODO: Add separator
 
+	
 	minus.button = createImg(minus.imageLoc, 'minus');
 	minus.button.position(xPercent(minus.x), yPercent(minus.y));
 	minus.button.size(xPercent(minus.width), yPercent(minus.height));
@@ -165,13 +201,13 @@ timeMenu.buttons = () =>{
 	plus.button.size(xPercent(plus.width), yPercent(plus.height));
 	plus.button.mousePressed(plus.event);
 }
-pause.event= () => {
-	if(!pause.state) {
-		pause.state = true;
+pauseButton.event= () => {
+	if(!pauseButton.state) {
+		pauseButton.state = true;
 		loop();
 		return;
 	}
-	pause.state = false;
+	pauseButton.state = false;
 	noLoop();
 }
 minus.event= async () => {
@@ -191,8 +227,8 @@ plus.event= async () => {
 	}
 }
 time.advance= async () => { //FIXME: inaccurate to ms
-	if(!pause.state) {
-		console.log(time.current);
+	if(!pauseButton.state) {
+		// console.log(time.current);
 		await sleep((time.waitMS / time.multiplier / time.framesPer));
 		time.current += 1 / time.framesPer;
 		if (time.current > 24) {time.current = 0;}
