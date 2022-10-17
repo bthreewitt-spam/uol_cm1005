@@ -14,7 +14,7 @@ let sky = {r:0, g:204, b:254};
 let sun = {path:92, diameter:8, //as % of width 
 			r:255, g:255, b:0};
 let moon = {path:sun.path, diameter:sun.diameter, 
-			r:255, g:255, b:255}; //TODO: set moon color
+			r:200, g:200, b:255};
 let ground = {x:0, y:65, 
 			r:0, g:200, b:0};
 
@@ -46,7 +46,6 @@ ground.draw = () => {
 	rect(xPercent(ground.x), yPercent(ground.y), windowWidth, yPercent(ground.y));
 	pop();
 }
-
 sun.draw = () => {
 	push();
 	stroke(sun.r, sun.g, sun.b);
@@ -69,11 +68,34 @@ moon.draw = () => {
 		PI + (time.current - 12) / 12 * PI + .0001);
 	pop();
 }
-
 function setColor(){
-	
-}
+	if (time.current <= 7){ //sunrise
+		sky.g = min(sky.g + .9 * time.multiplier, 204);
+		sky.b = min(sky.b + .9 * time.multiplier, 254);
+		
+		sun.g = min( sun.g + .75 * time.multiplier, 255);
 
+		ground.g = min(ground.g + .5 * time.multiplier, 255);
+		return;
+	} if (time.current <= 11){ //sunset
+		sky.g = max(sky.g - .5 * time.multiplier, 100);
+		sky.b = max(sky.b - .5 * time.multiplier, 155);
+		
+		sun.g = max(sun.g - .8 * time.multiplier, 150);
+		
+		ground.g = max(ground.g -= .3 * time.multiplier, 100);
+		return;
+	} if(time.current <= 19){ //moonrise
+		sky.g = max(sky.g - .8 * time.multiplier, 20); 
+		sky.b = max(sky.b - .87 * time.multiplier, 50);
+		ground.g = max(ground.g - .9 * time.multiplier, 35);
+	} else{ //moon-set
+		sky.g += .5 * time.multiplier; 
+		sky.b += .3 * time.multiplier;
+		
+		ground.g += .3 * time.multiplier;
+	}
+}
 timeMenu.display = () =>{
 	fill(timeMenu.r, timeMenu.g, timeMenu.b);
 	rect(xPercent(timeMenu.x), yPercent(timeMenu.y), xPercent(timeMenu.width), yPercent(timeMenu.height), 8);
