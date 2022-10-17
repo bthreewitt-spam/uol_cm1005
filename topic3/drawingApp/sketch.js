@@ -4,7 +4,7 @@ let colorPicker, colorPickerLabel;
 let sizeUpButton, sizeDownButton, eraseButton, clearButton;
 const MAX_BRUSH_STROKE = 50, DEFAULT_BRUSH_STROKE = 10, MIN_BRUSH_STROKE = 1;
 let brushStroke = DEFAULT_BRUSH_STROKE, lastDrawStroke;
-let currently_erasing = false;
+let currentlyErasing = false;
 
 //TODO: create recent sketch menu
 function setup() {
@@ -23,7 +23,7 @@ function mouseDragged(){
 	if(mouseX < menuWidth + menuX && mouseY < menuHeight + menuY){return;}
 	push();
 	strokeWeight(brushStroke);
-	if(currently_erasing){stroke(BACKGROUND_COLOR);}
+	if(currentlyErasing){stroke(BACKGROUND_COLOR);}
 	else{
 		stroke(colorPicker.color()); 
 		noCursor();}
@@ -90,7 +90,7 @@ async function sizeUpButtonEvent(){
 function brushSizeView(){
 	push();
 	noStroke();
-	if(currently_erasing){fill(BACKGROUND_COLOR);} else{fill(colorPicker.color());}
+	if(currentlyErasing){fill(BACKGROUND_COLOR);} else{fill(colorPicker.color());}
 	ellipse(xPercent(3.5),yPercent(18.5),brushStroke);
 	pop();
 }
@@ -103,25 +103,25 @@ async function sizeDownButtonEvent() {
 	}
 }
 function eraseButtonEvent(){ 
-	if(!currently_erasing){
-		currently_erasing = true;
+	if(!currentlyErasing){
+		currentlyErasing = true;
 		colorPicker.color(BACKGROUND_COLOR);
 		lastDrawStroke = brushStroke;
 		if(brushStroke<=MAX_BRUSH_STROKE/2){brushStroke *= 2;}
 		else{brushStroke=MAX_BRUSH_STROKE;}
 		return;
 	}
-	currently_erasing = false;
+	currentlyErasing = false;
 	brushStroke = lastDrawStroke;
 }
 function clearButtonEvent(){
-	if(currently_erasing){eraseButtonEvent();} // stops erasing
+	if(currentlyErasing){eraseButtonEvent();} // stops erasing
 	brushStroke = DEFAULT_BRUSH_STROKE;
 	background(BACKGROUND_COLOR);
 }
 function setCursor(){
 	if(mouseX < menuWidth + menuX && mouseY < menuHeight + menuY) {cursor(ARROW);}
-	else if(currently_erasing){cursor('assets/eraser.cur');}
+	else if(currentlyErasing){cursor('assets/eraser.cur');}
 	else {cursor(CROSS);}
 }
 function windowResized() { //FIXME: allow window resizing without reset
