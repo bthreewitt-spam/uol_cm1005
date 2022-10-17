@@ -1,6 +1,6 @@
 let time = {current: 0, waitMS: 500, multiplier: 1, framesPer:20};
 let timeMenu = {x:88, y:94, width:10, height:4,
-				r:30, g:40, b:40};
+				r:30, g:40, b:40, a:130};
 let pause = {imageLoc:'assets/pause.svg', state: false,
 	x:88.5, y:95, width:2, height:2};
 let minus = {imageLoc:'assets/minus.svg', min: .1,
@@ -37,7 +37,6 @@ function draw(){
 	timeMenu.display();
 	time.advance();
 }
-
 
 
 ground.draw = () => {
@@ -97,7 +96,7 @@ function setColor(){
 	}
 }
 timeMenu.display = () =>{
-	fill(timeMenu.r, timeMenu.g, timeMenu.b);
+	fill(timeMenu.r, timeMenu.g, timeMenu.b, timeMenu.a);
 	rect(xPercent(timeMenu.x), yPercent(timeMenu.y), xPercent(timeMenu.width), yPercent(timeMenu.height), 8);
 	
 	push();
