@@ -77,31 +77,40 @@ function setup()
 function mouseMoved()
 {
 	console.log("mouseMoved", mouseX, mouseY);
+	SecureLockerValue_0 = 7;
 }
 
 function mouseDragged()
 {
 	console.log("mouseDragged", mouseX, mouseY);
+	SecureLockerValue_1 = 47;
 }
 
 function mousePressed()
 {
 	console.log("mousePressed");
+	SecureLockerValue_1 = 6;
+	
 }
 
 function mouseReleased()
 {
 	console.log("mouseReleased");
+	SecureLockerValue_0 = 14;
+	SecureLockerValue_1 = 74;
 }
 
 function keyPressed()
 {
 	console.log("keyPressed", key);
+	SecureLockerValue_0 = 13;
 }
 
 function keyReleased()
 {
 	console.log("keyReleased", key);
+	SecureLockerValue_0 = 12;
+	SecureLockerValue_1 = 54;
 }
 
 ///////////////DO NOT CHANGE CODE BELOW THIS POINT///////////////////
