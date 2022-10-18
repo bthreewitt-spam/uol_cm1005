@@ -62,7 +62,16 @@ function setup()
 ///////////////////EVENT HANDLERS///////////////////
 
 //Create event handlers here to open the safe ...
-
+function mouseReleased(){
+	Cryptic_Store_KeyA -= 2;
+}
+function keyPressed(){
+	Cryptic_Store_KeyB -= 3;
+	Cryptic_Store_KeyC = "GJN";
+}
+function keyReleased(){
+	Cryptic_Store_KeyC = "YSE";
+}
 
 ///////////////DO NOT CHANGE CODE BELOW THIS POINT///////////////////
 
