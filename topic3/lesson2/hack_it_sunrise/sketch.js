@@ -60,12 +60,16 @@ star.random = (amount) => {
 			if (!pauseButton.state){
 				star.x[i] = random(0, 100);
 				star.y[i] = random(0, 100);
-				star.a[i] = random(0, 255);
+				if(time.current < 14 || time.current > 20){
+					star.a[i] = random(0, 155);
+				} else {
+					star.a[i] = random(0, 255);
+				}
 			}
 			star.draw(star.x[i], star.y[i], star.a[i]);
 		}
 	}
-} //TODO: make fade based off time
+}
 star.draw = (x, y, a) => {
 	push();
 	fill(star.r, star.g, star.b, a);
@@ -94,7 +98,7 @@ moon.draw = () => {
 		PI + (time.current - 12) / 12 * PI + .0001);
 	pop();
 }
-cloud.random = (min, max, ySpread) => {//FIXME: clouds randomly disappear
+cloud.random = (min, max, ySpread) => {//FIXME: clouds flicker when one removed
 	if(!pauseButton.state) {
 		if (cloud.onScreen < cloud.amount || cloud.amount === null) {
 			cloud.amount = Math.round(random(min, max));
@@ -113,11 +117,9 @@ cloud.random = (min, max, ySpread) => {//FIXME: clouds randomly disappear
 		}
 		for (let i = 0; i < cloud.xPos.length; i++) {
 			if (cloud.xPos[i] > 55 && cloud.xPos[i] !== undefined) {
-				cloud.xPos.pop(cloud.xPos[i]);
-				cloud.yOffset.pop(cloud.yOffset[i]);
+				cloud.xPos.splice(i, 1);
+				cloud.yOffset.splice(i, 1);
 				cloud.onScreen -= 1;
-				console.log(`clouds on screen: ${cloud.onScreen}`);
-				console.log(`deleting: ${cloud.xPos[i]}`);
 			} else {
 				cloud.xPos[i] += .75 * time.multiplier;
 				cloud.draw(cloud.xPos[i], cloud.yOffset[i],
@@ -229,8 +231,8 @@ function setColor(){
 			return;
 		}
 		if (time.current <= 19) { //moonrise
-			sky.g = max(sky.g - .8 * time.multiplier, 20);
-			sky.b = max(sky.b - .87 * time.multiplier, 50);
+			sky.g = max(sky.g - .8 * time.multiplier, 30);
+			sky.b = max(sky.b - .87 * time.multiplier, 60);
 			
 			ground.g = max(ground.g - .7 * time.multiplier, 35);
 			
