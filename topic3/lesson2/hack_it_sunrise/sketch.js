@@ -11,6 +11,8 @@ let plus = {imageLoc:'assets/plus.svg', max: 5,
 //NOTE: Color of elements at 6
 //NOTE: All coordinate numbers are percentages of window width/height
 let sky = {r:0, g:204, b:254};
+let star = {r:255, g:255, b:255, a:[],
+			x:[] , y:[]}
 let sun = {path:92, diameter:8, //as % of width 
 			r:255, g:255, b:0};
 let moon = {path:sun.path, diameter:sun.diameter,
@@ -32,10 +34,12 @@ function draw(){
 	setColor();
 	
 	background(sky.r, sky.g, sky.b);
+	star.random();
 	sun.draw();
 	moon.draw();
 	ground.draw();
-	cloud.random(1,50,15);
+	cloud.random(1,7,30);
+	
 	timeMenu.display();
 	time.advance();
 }
@@ -46,6 +50,9 @@ ground.draw = () => {
 	fill(ground.r, ground.g, ground.b);
 	rect(xPercent(ground.x), yPercent(ground.y), windowWidth, yPercent(ground.y));
 	pop();
+}
+star.random = () => {
+
 }
 sun.draw = () => {
 	push();
@@ -69,28 +76,35 @@ moon.draw = () => {
 		PI + (time.current - 12) / 12 * PI + .0001);
 	pop();
 }
-cloud.random = (min, max, ySpread) => {//FIXME
-	if(cloud.onScreen < cloud.amount || cloud.amount === null) {
-		cloud.amount = random(min, max);
-		if(cloud.onScreen < cloud.amount) {
-			for (let i = 0; i <= cloud.amount - cloud.onScreen; i++) {
-				cloud.yOffset.push(random(-ySpread / 2, ySpread / 2));
-				cloud.xPos.push(random(-104,-54));
-				cloud.draw(cloud.xPos[i], cloud.yOffset[i], 
-					0, 0);
-				cloud.onScreen += 10;
+cloud.random = (min, max, ySpread) => {//FIXME: clouds randomly disappear
+	if(!pauseButton.state) {
+		if (cloud.onScreen < cloud.amount || cloud.amount === null) {
+			cloud.amount = Math.round(random(min, max));
+			console.log(`cloud amount ${cloud.amount}`);
+			if (cloud.onScreen < cloud.amount) {
+				for (let i = 0; i <= cloud.amount - cloud.onScreen + 1; i++) {
+					cloud.yOffset.push(random(-ySpread / 2, ySpread / 2));
+					cloud.xPos.push(round(random(-204, -54)));
+					cloud.draw(cloud.xPos[i], cloud.yOffset[i],
+						0, 0);
+					cloud.onScreen += 1;
+					console.log(`clouds on screen: ${cloud.onScreen} ${i}`);
+				}
 			}
+			return;
 		}
-		return;
-	}
-	
-	for(let i = 0; i < cloud.xPos.length; i++){
-		if(cloud.xPos[i] > 54){
-			cloud.xPos.pop(cloud.xPos[i]);
-			cloud.yOffset.pop(cloud.yOffset[i]);
-			cloud.onScreen -= 1;
-		} else{
-			cloud.xPos[i] += 20;
+		for (let i = 0; i < cloud.xPos.length; i++) {
+			if (cloud.xPos[i] > 55 && cloud.xPos[i] !== undefined) {
+				cloud.xPos.pop(cloud.xPos[i]);
+				cloud.yOffset.pop(cloud.yOffset[i]);
+				cloud.onScreen -= 1;
+				console.log(`clouds on screen: ${cloud.onScreen}`);
+				console.log(`deleting: ${cloud.xPos[i]}`);
+			} else {
+				cloud.xPos[i] += .75 * time.multiplier;
+				cloud.draw(cloud.xPos[i], cloud.yOffset[i],
+					0, 0);
+			}
 		}
 	}
 } 
@@ -129,6 +143,7 @@ cloud.draw = (xOffset,yOffset,widthOffset, heightOffset) => {
 }
 function setColor(){
 	if(!pauseButton.state) {
+		console.log(time.current);
 		if (time.current <= 7) { //sunrise
 			sky.g = min(sky.g + .9 * time.multiplier, 204);
 			sky.b = min(sky.b + .9 * time.multiplier, 254);
@@ -136,6 +151,8 @@ function setColor(){
 			sun.g = min(sun.g + .75 * time.multiplier, 255);
 
 			ground.g = min(ground.g + .5 * time.multiplier, 255);
+
+			cloud.fill = min(cloud.fill + .9 * time.multiplier, 255);
 			return;
 		}
 		if (time.current <= 11) { //sunset
@@ -145,17 +162,26 @@ function setColor(){
 			sun.g = max(sun.g - .8 * time.multiplier, 150);
 
 			ground.g = max(ground.g -= .3 * time.multiplier, 100);
+
+			cloud.fill = max(cloud.fill - .5 * time.multiplier, 150);
+
 			return;
 		}
 		if (time.current <= 19) { //moonrise
 			sky.g = max(sky.g - .8 * time.multiplier, 20);
 			sky.b = max(sky.b - .87 * time.multiplier, 50);
+			
 			ground.g = max(ground.g - .9 * time.multiplier, 35);
+			
+			cloud.fill = max(cloud.fill - .9 * time.multiplier, 75);
 		} else { //moon-set
 			sky.g += .5 * time.multiplier;
 			sky.b += .3 * time.multiplier;
 
 			ground.g += .3 * time.multiplier;
+			
+			cloud.fill = min(cloud.fill + .9 * time.multiplier, 200);
+
 		}
 	}
 }
