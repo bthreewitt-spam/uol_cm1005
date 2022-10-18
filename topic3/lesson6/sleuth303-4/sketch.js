@@ -82,7 +82,20 @@ function setup()
 ///////////////////EVENT HANDLERS///////////////////
 
 //Create event handlers here to open the safe ...
-
+function keyReleased(){
+	RestrictedLockerValA = random(3,16);
+}
+function mousePressed(){
+	RestrictedLockerValB = map(mouseY, 0, height, 4, 17);
+}
+function keyPressed(){
+	RestrictedLockerValC = key;
+}
+function mouseMoved(){
+	RestrictedLockerValD = map(mouseY, 0, height, 15, 73);
+	RestrictedLockerValE = map(mouseX, 0, width, 20, 72);
+	RestrictedLockerValF = map(mouseX, 0, width, 12, 79);
+}
 
 ///////////////DO NOT CHANGE CODE BELOW THIS POINT///////////////////
 
