@@ -29,19 +29,11 @@ var pawel_karpinski_obj;
 
 
 //declare your new objects below
-
-
-var anna_karpinski_coord_x = 115;
-var anna_karpinski_coord_y = 40;
-var countess_hamilton_coord_x = 408;
-var countess_hamilton_coord_y = 40;
-var robbie_kray_coord_x = 701;
-var robbie_kray_coord_y = 40;
-var ada_lovelace_coord_x = 115;
-var ada_lovelace_coord_y = 309;
-var bones_karpinski_coord_x = 701;
-var bones_karpinski_coord_y = 309;
-
+var anna_karpinski_obj;
+var countess_hamilton_obj;
+var robbie_kray_obj;
+var ada_lovelace_obj;
+var bones_karpinski_obj;
 
 function preload()
 {
@@ -64,9 +56,32 @@ function setup()
 		image: pawel_karpinski_image
 	};
 
-
-
 	//define your new objects below
+	anna_karpinski_obj = {
+		x: 115,
+		y: 40,
+		image: anna_karpinski_image
+	};
+	countess_hamilton_obj = {
+		x: 408,
+		y: 40,
+		image: countess_hamilton_image
+	};
+	robbie_kray_obj = {
+		x: 701,
+		y: 40,
+		image: robbie_kray_image
+	};
+	ada_lovelace_obj = {
+		x: 115,
+		y: 309,
+		image: ada_lovelace_image
+	};
+	bones_karpinski_obj = {
+		x: 701,
+		y: 309,
+		image: bones_karpinski_image
+	};
 }
 
 function draw()
@@ -74,12 +89,12 @@ function draw()
 	image(photoBoard, 0, 0);
 
 	//And update these image commands with your x and y coordinates.
-	image(anna_karpinski_image, anna_karpinski_coord_x, anna_karpinski_coord_y);
-	image(countess_hamilton_image, countess_hamilton_coord_x, countess_hamilton_coord_y);
-	image(robbie_kray_image, robbie_kray_coord_x, robbie_kray_coord_y);
-	image(ada_lovelace_image, ada_lovelace_coord_x, ada_lovelace_coord_y);
+	image(anna_karpinski_image, anna_karpinski_obj.x, anna_karpinski_obj.y);
+	image(countess_hamilton_image, countess_hamilton_obj.x, countess_hamilton_obj.y);
+	image(robbie_kray_image, robbie_kray_obj.x, robbie_kray_obj.y);
+	image(ada_lovelace_image, ada_lovelace_obj.x, ada_lovelace_obj.y);
 	image(pawel_karpinski_obj.image, pawel_karpinski_obj.x, pawel_karpinski_obj.y);
-	image(bones_karpinski_image, bones_karpinski_coord_x, bones_karpinski_coord_y);
+	image(bones_karpinski_image, bones_karpinski_obj.x, bones_karpinski_obj.y);
 
 
 }
