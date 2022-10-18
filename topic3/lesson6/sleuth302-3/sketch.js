@@ -43,9 +43,11 @@ function setup()
 
 	//Initialise the spotlight object
 	//with properties x, y, endX and endY
-
+	
   	spotlight = {
-		image: spotlight_image
+		image: spotlight_image,
+		x: 565, y: 600,
+		endX: 370, endY: 790
 	}
 }
 
@@ -54,7 +56,8 @@ function draw()
 	image(img, 0, 0);
 
 	// alter the object properties x and y below to animate the spotlight
-
+	spotlight.x -= 1;
+	spotlight.y += 1;
 
 	////////// DO NOT CHANGE ANYTHING BELOW /////////////
 
