@@ -78,7 +78,17 @@ function setup()
 ///////////////////EVENT HANDLERS///////////////////
 
 //Create event handlers here to open the safe ...
-
+function mousePressed(){
+	Restricted_Box_KeyA = max(2, mouseY);
+	Restricted_Box_KeyB = constrain(Restricted_Box_KeyB -3, 2, 17);
+}
+function mouseMoved(){
+	Restricted_Box_KeyC = min(mouseY, 15);
+}
+function mouseDragged(){
+	Restricted_Box_KeyD = max(Restricted_Box_KeyD - 2, 3);
+	Restricted_Box_KeyE = min(mouseX, 67);
+}
 
 ///////////////DO NOT CHANGE CODE BELOW THIS POINT///////////////////
 
