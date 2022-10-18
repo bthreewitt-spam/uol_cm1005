@@ -60,10 +60,10 @@ function draw()
 	//And update these image commands with your x and y coordinates.
 	image(cecilKarpinskiImage, cecilKarpinskiCoordX, cecilKarpinskiCoordY);
 
-	image(rockyKrayImage, 115, 40);
-	image(robbieKrayImage, 408, 40);
-	image(pawelKarpinskiImage, 701, 40);
-	image(countessHamiltonImage, 115, 309);
-	image(bonesKarpinskiImage, 701, 309);
+	image(rockyKrayImage, cecilKarpinskiCoordX - 293, cecilKarpinskiCoordY - 269);
+	image(robbieKrayImage, cecilKarpinskiCoordX, cecilKarpinskiCoordY - 269);
+	image(pawelKarpinskiImage, cecilKarpinskiCoordX + 293, cecilKarpinskiCoordY - 269);
+	image(countessHamiltonImage, cecilKarpinskiCoordX - 293, cecilKarpinskiCoordY);
+	image(bonesKarpinskiImage, cecilKarpinskiCoordX + 293, cecilKarpinskiCoordY);
 
 }
