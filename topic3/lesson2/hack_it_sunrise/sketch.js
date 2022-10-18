@@ -40,7 +40,6 @@ function draw(){
 	moon.draw();
 	ground.draw();
 	cloud.random(1,7,30);
-	
 	mountain.draw();
 	
 	timeMenu.display();
@@ -102,7 +101,6 @@ cloud.random = (min, max, ySpread) => {//FIXME: clouds flicker when one removed
 	if(!pauseButton.state) {
 		if (cloud.onScreen < cloud.amount || cloud.amount === null) {
 			cloud.amount = Math.round(random(min, max));
-			console.log(`cloud amount ${cloud.amount}`);
 			if (cloud.onScreen < cloud.amount) {
 				for (let i = 0; i <= cloud.amount - cloud.onScreen + 1; i++) {
 					cloud.yOffset.push(random(-ySpread / 2, ySpread / 2));
@@ -110,7 +108,6 @@ cloud.random = (min, max, ySpread) => {//FIXME: clouds flicker when one removed
 					cloud.draw(cloud.xPos[i], cloud.yOffset[i],
 						0, 0);
 					cloud.onScreen += 1;
-					console.log(`clouds on screen: ${cloud.onScreen} ${i}`);
 				}
 			}
 			return;
@@ -122,8 +119,7 @@ cloud.random = (min, max, ySpread) => {//FIXME: clouds flicker when one removed
 				cloud.onScreen -= 1;
 			} else {
 				cloud.xPos[i] += .75 * time.multiplier;
-				cloud.draw(cloud.xPos[i], cloud.yOffset[i],
-					0, 0);
+				cloud.draw(cloud.xPos[i], cloud.yOffset[i], 0, 0);
 			}
 		}
 	}
@@ -198,7 +194,6 @@ mountain.draw = () => {
 }
 function setColor(){
 	if(!pauseButton.state) {
-		console.log(time.current);
 		if (time.current <= 7) { //sunrise
 			sky.g = min(sky.g + .9 * time.multiplier, 204);
 			sky.b = min(sky.b + .9 * time.multiplier, 254);
@@ -212,7 +207,7 @@ function setColor(){
 			mountain.baseFill = min(mountain.baseFill + .9 * time.multiplier, 193);
 			mountain.tipFill = min(mountain.tipFill + .9 * time.multiplier, 254);
 			mountain.shadowFill = min(mountain.shadowFill + .9 * time.multiplier, 169);
-
+			
 			return;
 		}
 		if (time.current <= 11) { //sunset
@@ -228,6 +223,7 @@ function setColor(){
 			mountain.baseFill = max(mountain.baseFill - .5 * time.multiplier, 143);
 			mountain.tipFill = max(mountain.tipFill - .5 * time.multiplier, 204);
 			mountain.shadowFill = max(mountain.shadowFill - .5 * time.multiplier, 119);
+			
 			return;
 		}
 		if (time.current <= 19) { //moonrise
@@ -285,8 +281,6 @@ timeMenu.buttons = () =>{
 	pauseButton.button.size(xPercent(pauseButton.width), yPercent(pauseButton.height));
 	pauseButton.button.mousePressed(pauseButton.event);
 	
-
-	
 	minus.button = createImg(minus.imageLoc, 'minus');
 	minus.button.position(xPercent(minus.x), yPercent(minus.y));
 	minus.button.size(xPercent(minus.width), yPercent(minus.height));
@@ -331,7 +325,6 @@ time.advance= async () => { //FIXME: inaccurate to ms
 		redraw();
 	}
 }
-
 function sleep(ms) {return new Promise(resolve => setTimeout(resolve, ms));}
 function xPercent(percent){return percent / 100 * windowWidth;}
 function yPercent(percent){return percent / 100 * windowHeight;}
