@@ -38,6 +38,21 @@ var annaKarpinskiImage;
 var adaLovelaceLocationX = 408;
 var adaLovelaceLocationY = 309;
 
+var cecilKarpinskiLocationX = 115;
+var cecilKarpinskiLocationY = 40;
+
+var rockyKrayLocationX = 408;
+var rockyKrayLocationY = 40;
+
+var pawelKarpinskiLocationX = 701;
+var pawelKarpinskiLocationY = 40;
+
+var robbieKrayLocationX = 115;
+var robbieKrayLocationY = 309;
+
+var annaKarpinskiLocationX = 701;
+var annaKarpinskiLocationY = 309;
+
 
 function preload()
 {
@@ -65,10 +80,10 @@ function draw()
 	//And update these image commands with your x and y coordinates.
 	image(adaLovelaceImage, adaLovelaceLocationX, adaLovelaceLocationY);
 
-	image(cecilKarpinskiImage, 115, 40);
-	image(rockyKrayImage, 408, 40);
-	image(pawelKarpinskiImage, 701, 40);
-	image(robbieKrayImage, 115, 309);
-	image(annaKarpinskiImage, 701, 309);
+	image(cecilKarpinskiImage, cecilKarpinskiLocationX, cecilKarpinskiLocationY);
+	image(rockyKrayImage, rockyKrayLocationX, rockyKrayLocationY);
+	image(pawelKarpinskiImage, pawelKarpinskiLocationX, pawelKarpinskiLocationY);
+	image(robbieKrayImage, robbieKrayLocationX, robbieKrayLocationY);
+	image(annaKarpinskiImage, annaKarpinskiLocationX, annaKarpinskiLocationY);
 
 }
