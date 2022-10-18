@@ -12,7 +12,7 @@ let plus = {imageLoc:'assets/plus.svg', max: 5,
 //NOTE: All coordinate numbers are percentages of window width/height
 let sky = {r:0, g:204, b:254};
 let star = {r:255, g:255, b:255, a:[],
-			x:[] , y:[]}
+			x:[] , y:[], generated:false}
 let sun = {path:92, diameter:8, //as % of width 
 			r:255, g:255, b:0};
 let moon = {path:sun.path, diameter:sun.diameter,
@@ -34,7 +34,7 @@ function draw(){
 	setColor();
 	
 	background(sky.r, sky.g, sky.b);
-	star.random();
+	star.random(50);
 	sun.draw();
 	moon.draw();
 	ground.draw();
@@ -51,8 +51,23 @@ ground.draw = () => {
 	rect(xPercent(ground.x), yPercent(ground.y), windowWidth, yPercent(ground.y));
 	pop();
 }
-star.random = () => {
-
+star.random = (amount) => {
+	if(time.current > 12){
+		for(let i = 0; i < amount; i++){
+			if (!pauseButton.state){
+				star.x[i] = random(0, 100);
+				star.y[i] = random(0, 100);
+				star.a[i] = random(0, 255);
+			}
+			star.draw(star.x[i], star.y[i], star.a[i]);
+		}
+	}
+}
+star.draw = (x, y, a) => {
+	push();
+	fill(star.r, star.g, star.b, a);
+	ellipse(xPercent(x), yPercent(y), xPercent(.2));
+	pop();
 }
 sun.draw = () => {
 	push();
