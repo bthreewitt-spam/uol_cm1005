@@ -17,10 +17,11 @@ let sun = {path:92, diameter:8, //as % of width
 			r:255, g:255, b:0};
 let moon = {path:sun.path, diameter:sun.diameter,
 			r:200, g:200, b:255};
-let cloud = {x:50, y:10, width:7.75, height:4.75, fill:254, 
-	amount:null, onScreen: 0, yOffset:[], xPos:[]};
 let ground = {x:0, y:65,
 			r:0, g:200, b:0};
+let cloud = {x:50, y:10, width:7.75, height:4.75, fill:254,
+	amount:null, onScreen: 0, yOffset:[], xPos:[]};
+let mountain = {baseFill: 193, tipFill: 254, shadowFill: 169}; 
 
 
 function setup(){
@@ -39,6 +40,8 @@ function draw(){
 	moon.draw();
 	ground.draw();
 	cloud.random(1,7,30);
+	
+	mountain.draw();
 	
 	timeMenu.display();
 	time.advance();
@@ -62,7 +65,7 @@ star.random = (amount) => {
 			star.draw(star.x[i], star.y[i], star.a[i]);
 		}
 	}
-}
+} //TODO: make fade based off time
 star.draw = (x, y, a) => {
 	push();
 	fill(star.r, star.g, star.b, a);
@@ -156,6 +159,41 @@ cloud.draw = (xOffset,yOffset,widthOffset, heightOffset) => {
 		xPercent(widthOffset + cloud.width - 5.25),
 		yPercent(heightOffset + cloud.height - 1.25));
 }
+mountain.draw = () => {
+	//shadow 
+	fill(mountain.shadowFill);
+	triangle(xPercent(65),yPercent(65),
+		xPercent(95),yPercent(65),
+		xPercent(80),yPercent(35));
+	
+	//base
+	fill(mountain.baseFill);
+	//left
+	triangle(xPercent(65),yPercent(65),
+		xPercent(95),yPercent(65),
+		xPercent(77.5),yPercent(40));
+	//center
+	triangle(xPercent(65),yPercent(65),
+		xPercent(95),yPercent(65),
+		xPercent(80),yPercent(39.5));
+	//right
+	triangle(xPercent(65),yPercent(65),
+		xPercent(95),yPercent(65),
+		xPercent(82.5),yPercent(40));
+	
+	//tip
+	fill(mountain.tipFill);
+	//left
+	quad(xPercent(78.75),yPercent(41),
+		xPercent(77.7),yPercent(39.75),
+		xPercent(80),yPercent(35),
+		xPercent(81),yPercent(37.5));
+	//right
+	quad(xPercent(81.25),yPercent(41),
+		xPercent(80),yPercent(39),
+		xPercent(80),yPercent(35),
+		xPercent(82.3),yPercent(39.75));
+}
 function setColor(){
 	if(!pauseButton.state) {
 		console.log(time.current);
@@ -168,6 +206,11 @@ function setColor(){
 			ground.g = min(ground.g + .5 * time.multiplier, 255);
 
 			cloud.fill = min(cloud.fill + .9 * time.multiplier, 255);
+
+			mountain.baseFill = min(mountain.baseFill + .9 * time.multiplier, 193);
+			mountain.tipFill = min(mountain.tipFill + .9 * time.multiplier, 254);
+			mountain.shadowFill = min(mountain.shadowFill + .9 * time.multiplier, 169);
+
 			return;
 		}
 		if (time.current <= 11) { //sunset
@@ -180,15 +223,22 @@ function setColor(){
 
 			cloud.fill = max(cloud.fill - .5 * time.multiplier, 150);
 
+			mountain.baseFill = max(mountain.baseFill - .5 * time.multiplier, 143);
+			mountain.tipFill = max(mountain.tipFill - .5 * time.multiplier, 204);
+			mountain.shadowFill = max(mountain.shadowFill - .5 * time.multiplier, 119);
 			return;
 		}
 		if (time.current <= 19) { //moonrise
 			sky.g = max(sky.g - .8 * time.multiplier, 20);
 			sky.b = max(sky.b - .87 * time.multiplier, 50);
 			
-			ground.g = max(ground.g - .9 * time.multiplier, 35);
+			ground.g = max(ground.g - .7 * time.multiplier, 35);
 			
 			cloud.fill = max(cloud.fill - .9 * time.multiplier, 75);
+
+			mountain.baseFill = max(mountain.baseFill - .9 * time.multiplier, 83);
+			mountain.tipFill = max(mountain.tipFill - .9 * time.multiplier, 144);
+			mountain.shadowFill = max(mountain.shadowFill - .9 * time.multiplier, 59);
 		} else { //moon-set
 			sky.g += .5 * time.multiplier;
 			sky.b += .3 * time.multiplier;
@@ -197,6 +247,9 @@ function setColor(){
 			
 			cloud.fill = min(cloud.fill + .9 * time.multiplier, 200);
 
+			mountain.baseFill = min(mountain.baseFill + .9 * time.multiplier, 103);
+			mountain.tipFill = min(mountain.tipFill + .9 * time.multiplier, 164);
+			mountain.shadowFill = min(mountain.shadowFill + .9 * time.multiplier, 79);
 		}
 	}
 }
