@@ -1,12 +1,12 @@
-var robot_x;
-var robot_y;
+let robot_x;
+let robot_y;
 
 function setup()
 {
 	//create a canvas for the robot
 	createCanvas(500, 500);
-	robotX = -320;
-	robotY = 100;
+	robot_x = -320;
+	robot_y = 100;
 }
 
 function draw()
@@ -21,7 +21,7 @@ function draw()
 
 	//robots antenna
 	fill(250, 250, 0);
-	elipse(robot_y + 150, robot_y - 30, 60, 60);
+	ellipse(robot_x + 150, robot_y - 30, 60, 60);
 
 	fill(200, 0, 200);
 	rect(robot_x + 110, robot_y - 20, 80, 30);
@@ -39,7 +39,7 @@ function draw()
 
 	//robots nose
 	fill(255, 0, 0);
-	triangle(robot_x + 150, robot_y 120,
+	triangle(robot_x + 150, robot_y + 120,
 		robot_x + 100, robot_y + 200,
 		robot_x + 200, robot_y + 200);
 
@@ -64,7 +64,7 @@ function draw()
 	endShape();
 
 	//animate the robot
-	robot_y += 1;
+	robot_x += 1;
 }
 
 function keyPressed()
