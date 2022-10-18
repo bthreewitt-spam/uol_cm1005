@@ -45,7 +45,11 @@ function setup()
 	createCanvas(img.width, img.height);
 	
 	//add your code here
-
+	startX = 735;
+	startY = 760;
+	
+	endX = 295;
+	endY = 320;
 
 	//Initialize x and y with the start values
 	x = startX;
@@ -57,7 +61,8 @@ function draw()
 	image(img, 0, 0);
 
 	// alter the variables x and y below to animate the spotlight
-
+	x -= 1;
+	y -= 1;
 
 
 	////////// DO NOT CHANGE ANYTHING BELOW /////////////
