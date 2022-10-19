@@ -20,10 +20,31 @@ function draw(){
     gameChar_y = 137;
 
     //Front facing - code goes here
+    // body
+    fill(30)
+    arc(gameChar_x, gameChar_y-25, 20, 40, PI-1, 1, CHORD);
+    //legs
+    stroke(30);
+    strokeWeight(5)
+    line(gameChar_x-5, gameChar_y-2, gameChar_x-5, gameChar_y-12);//left
+    line(gameChar_x+5, gameChar_y-2, gameChar_x+5, gameChar_y-12);//right
+    //arms
+    line(gameChar_x-11, gameChar_y-20, gameChar_x-8, gameChar_y-35); //left
+    line(gameChar_x+11, gameChar_y-20, gameChar_x+8, gameChar_y-35); //right
+    noStroke();
+    // head
+    push();
+    fill(253, 209, 167);
+    ellipse(gameChar_x, gameChar_y-50, 30);
+    pop();
+    arc(gameChar_x, gameChar_y-50, 29, 30, PI+.25, -.25, CHORD);
+    arc(gameChar_x, gameChar_y-50, 30, 31, .25, PI, CHORD);
+    fill(0);
+    ellipse(gameChar_x - 5 , gameChar_y-51, 4); // left eye
+    ellipse(gameChar_x + 5 , gameChar_y-51, 4); // right eye
 
 
-    
-    
+
     stroke(100);
     noFill();
     rect(200,60,50,80);
