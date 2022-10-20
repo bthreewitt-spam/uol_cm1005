@@ -14,7 +14,7 @@ function setup() {
 function draw(){
 	createGradient(gradient.startX, gradient.endX, gradient.startY, gradient.endY);
 
-
+	
 }
 
 function createGradient(startX, endX, startY, endY){
