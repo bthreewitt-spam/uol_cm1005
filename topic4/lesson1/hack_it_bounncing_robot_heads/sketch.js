@@ -2,13 +2,10 @@ const BALL_SIZE = 200;
 const BOUNCE = {BOOST: 5, FRAMES: 100};
 let gradient
 let background;
-
 let bender
 let flexo;
 
-function preload(){
-	background = loadImage('background1.png');
-}
+function preload(){background = loadImage('background1.png');}
 function setup() {
 
 	gradient = {
@@ -41,13 +38,8 @@ function setup() {
 	createCanvas(windowWidth, windowHeight);
 }
 function draw(){
-	console.time('gradient');
 	image(gradient.img, 0,0,width,height);
-	console.timeEnd('gradient');
 
-	
-
-	console.time('touch');
 	if(dist(bender.x, bender.y, flexo.x, flexo.y) >= BALL_SIZE){
 		move(bender);
 		move(flexo);
@@ -55,40 +47,13 @@ function draw(){
 		bounce(flexo);
 		bounce(bender);
 	}
-	console.timeEnd('touch');
 
-	console.time('corner');
 	hitCorner(bender);
 	hitCorner(flexo);
-	console.timeEnd('corner');
 
-	console.time('draw');
 	drawRobot(bender.x,bender.y, bender.isFlexo);
 	drawRobot(flexo.x,flexo.y, flexo.isFlexo);
-	console.timeEnd('draw');
-
 }
-
-function createGradient(startX, endX, startY, endY){
-	let newColor;
-	push();
-	strokeWeight(1);
-	for (let y = 0; y < height*3; y++) {
-		let amount = map(y, 0, height, 0, 1);
-		newColor = lerpColor(startY, endY, amount);
-		stroke(newColor);
-		line(0, y/3, width, y*2);
-	}
-
-	for (let x = 0; x < width*2; x++) {
-		let amount = map(x, 0, width*2, 0, 1);
-		newColor = lerpColor(startX, endX, amount);
-		stroke(newColor);
-		line(x*3, 0, x/2, height);
-	}
-	pop();
-}
-
 function drawRobot(x, y, isFlexo){
 	push();
 	
@@ -104,7 +69,6 @@ function drawRobot(x, y, isFlexo){
 	
 	pop();
 }
-
 async function bounce(robot){
 	robot.directionY *= -1;
 	robot.directionX *= -1;
