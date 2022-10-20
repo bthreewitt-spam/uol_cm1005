@@ -4,7 +4,10 @@ function setup() {
 }
 
 function draw() {
-	drawBender(200, 50,200,200,200);
+	push();
+	scale(.15);
+	drawBender(30, 50,200,200,200);
+	pop();
 	drawBender(750, 50,253,214,15); //Gold Bender
 	drawFlexo(1300, 50,200,200,200);
 }
