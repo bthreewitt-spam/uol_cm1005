@@ -10,18 +10,20 @@ function preload(){
 	background = loadImage('background1.png');
 }
 function setup() {
+
 	gradient = {
 		startX: color(0, 100, 160, 150),
 		endX: color(63, 155, 0, 50),
 		startY: color(255,0,0),
-		endY: color(130,0,130, 150)
+		endY: color(130,0,130, 150),
+		img: loadImage('gradientImg.png')
 	};
-	
+
 	bender = {
 		x: 200,
 		y: 200,
 		isFlexo: false,
-		speed: 10,
+		speed: 2.5,
 		directionX: 1,
 		directionY: 1
 	};
@@ -30,18 +32,22 @@ function setup() {
 		x: 600,
 		y: 600,
 		isFlexo: true,
-		speed: 10,
+		speed: 3,
 		directionX: -1,
 		directionY: -1
 	}
-	
 	frameRate(60);
+
 	createCanvas(windowWidth, windowHeight);
-	
 }
 function draw(){
-	createGradient(gradient.startX, gradient.endX, gradient.startY, gradient.endY);
+	console.time('gradient');
+	image(gradient.img, 0,0,width,height);
+	console.timeEnd('gradient');
 
+	
+
+	console.time('touch');
 	if(dist(bender.x, bender.y, flexo.x, flexo.y) >= BALL_SIZE){
 		move(bender);
 		move(flexo);
@@ -49,12 +55,18 @@ function draw(){
 		bounce(flexo);
 		bounce(bender);
 	}
-	
+	console.timeEnd('touch');
+
+	console.time('corner');
 	hitCorner(bender);
 	hitCorner(flexo);
-	
+	console.timeEnd('corner');
+
+	console.time('draw');
 	drawRobot(bender.x,bender.y, bender.isFlexo);
 	drawRobot(flexo.x,flexo.y, flexo.isFlexo);
+	console.timeEnd('draw');
+
 }
 
 function createGradient(startX, endX, startY, endY){
@@ -104,7 +116,6 @@ async function bounce(robot){
 		await sleep(2000);
 	}
 	
-	move(robot);
 }
 function move(robot){
 	robot.x += robot.speed * robot.directionX;
