@@ -1,5 +1,5 @@
-var redButton;
-var alertFlash = true;
+let redButton;
+let alertFlash = true;
 
 function setup()
 {
@@ -18,19 +18,12 @@ function draw()
 {
 	background(255);
 
-	if (frameCount / 30 == parseInt(frameCount / 30))
+	if (Number.isInteger(frameCount / 30))
 	{
-		if (alertFlash == true)
-		{
-			alertFlash = true;
-		}
-		else
-		{
-			alertFlash = false;
-		}
+		alertFlash = !alertFlash;
 	}
 
-	if (redButton.activated == true)
+	if (redButton.activated)
 	{
 		background(250, 250, 0);
 
@@ -65,13 +58,6 @@ function mousePressed()
 {
 	if (dist(mouseX, mouseY, redButton.x, redButton.y) < redButton.dia)
 	{
-		if (redButton.activated = true)
-		{
-			redButton.activated = false;
-		}
-		else
-		{
-			redButton.activated = true;
-		}
+		redButton.activated = !redButton.activated;
 	}
 }
