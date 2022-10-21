@@ -1,6 +1,7 @@
 let gameChar_x = 0;
 let gameChar_y = 0;
 
+ // fixme: height to 31 w to 30 on top mask
 function setup(){
     createCanvas(400, 600);
 }
