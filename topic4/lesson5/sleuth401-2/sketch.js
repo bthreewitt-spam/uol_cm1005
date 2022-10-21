@@ -103,6 +103,14 @@ function draw()
 	//Develop the antidote below
 	//Write conditional statements to change the amount of each substance ...
 
+	if(strychnine >.73 || chlorine < .31){aspirin -= .05;}
+	if(snakeVenom < .46){aspirin += .05;}
+	if(snakeVenom > .67){sodiumBicarbonate -=.02;}
+	if(strychnine > .63){sodiumBicarbonate += .03;}
+	if(strychnine < .69 || snakeVenom < .34){paracetamol -= .02;}
+	if(chlorine < .25){paracetamol += .02;}
+	if(formaldehyde > .25){calcium_gluconate -= .05;}
+	if(chlorine < .62 || strychnine > .7){calcium_gluconate += .05;}
 
 
 
