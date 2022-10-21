@@ -1,7 +1,7 @@
 let gameChar_x = 0;
 let gameChar_y = 0;
 
- // fixme: height to 31 w to 30 on top mask
+ 
 function setup(){
     createCanvas(400, 600);
 }
@@ -37,7 +37,7 @@ function draw(){
     ellipse(gameChar_x, gameChar_y-50, 30); // head
     pop();
     
-    arc(gameChar_x, gameChar_y-50, 29, 30, PI+.25, -.25, CHORD); //top of mask
+    arc(gameChar_x, gameChar_y-50, 30, 31, PI+.25, -.25, CHORD); //top of mask
     arc(gameChar_x, gameChar_y-50, 30, 31, .25, PI, CHORD); //bottom of mask
     
     fill(0);
@@ -72,7 +72,7 @@ function draw(){
     ellipse(gameChar_x, gameChar_y-50, 30); // head
     pop();
 
-    arc(gameChar_x, gameChar_y-50, 29, 30, PI+.25, -.25, CHORD); //top of mask
+    arc(gameChar_x, gameChar_y-50, 30, 31, PI+.25, -.25, CHORD); //top of mask
     arc(gameChar_x, gameChar_y-50, 30, 31, .25, PI, CHORD); //bottom of mask
 
     fill(0);
@@ -106,7 +106,7 @@ function draw(){
     ellipse(gameChar_x, gameChar_y-50, 30); // head
     pop();
 
-    arc(gameChar_x, gameChar_y-50, 29, 30, PI+.25, -.25, CHORD); //top of mask
+    arc(gameChar_x, gameChar_y-50, 30, 31, PI+.25, -.25, CHORD); //top of mask
     arc(gameChar_x, gameChar_y-50, 29, 31, -.5, PI-.15, CHORD); //bottom of mask
 
     fill(0);
@@ -138,7 +138,7 @@ function draw(){
     ellipse(gameChar_x, gameChar_y-50, 30); // head
     pop();
 
-    arc(gameChar_x, gameChar_y-50, 29, 30, PI+.25, -.25, CHORD); //top of mask
+    arc(gameChar_x, gameChar_y-50, 30, 31, PI+.25, -.25, CHORD); //top of mask
     arc(gameChar_x, gameChar_y-50, 30, 31, +.15, PI+.5, CHORD); //bottom of mask
 
     fill(0);
@@ -171,7 +171,7 @@ function draw(){
     ellipse(gameChar_x, gameChar_y-50, 30); // head
     pop();
 
-    arc(gameChar_x, gameChar_y-50, 29, 30, PI+.25, -.25, CHORD); //top of mask
+    arc(gameChar_x, gameChar_y-50, 30, 31, PI+.25, -.25, CHORD); //top of mask
     arc(gameChar_x, gameChar_y-50, 30, 31, +.15, PI+.5, CHORD); //bottom of mask
 
     fill(0);
@@ -204,7 +204,7 @@ function draw(){
     ellipse(gameChar_x, gameChar_y-50, 30); // head
     pop();
 
-    arc(gameChar_x, gameChar_y-50, 29, 30, PI+.25, -.25, CHORD); //top of mask
+    arc(gameChar_x, gameChar_y-50, 30, 31, PI+.25, -.25, CHORD); //top of mask
     arc(gameChar_x, gameChar_y-50, 29, 31, -.5, PI-.15, CHORD); //bottom of mask
 
     fill(0);
