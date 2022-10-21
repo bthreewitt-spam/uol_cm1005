@@ -12,7 +12,7 @@ function setup() {
 	createCanvas(1024, 576);
 	floorPos_y = 432;
 	
-	cloud = {x_pos: 450, 
+	cloud = {x_pos: 750, 
 			 y_pos: 150, 
 			 width: 100, 
 			 height:45};
@@ -225,7 +225,7 @@ function drawGameChar(){
 	ellipse(gameChar_x, gameChar_y-50, 30); // head
 	pop();
 
-	arc(gameChar_x, gameChar_y-50, 29, 30, PI+.25, -.25, CHORD); //top of mask
+	arc(gameChar_x, gameChar_y-50, 30, 31, PI+.25, -.25, CHORD); //top of mask
 	arc(gameChar_x, gameChar_y-50, 30, 31, .25, PI, CHORD); //bottom of mask
 
 	fill(0);
