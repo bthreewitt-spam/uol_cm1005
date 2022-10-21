@@ -122,6 +122,16 @@ function draw()
 	//Write conditional statements to change the amount of each substance ...
 
 
+	if((arsenic > .25 || Nerve_Gas < .75) && formaldehyde > .71 && sarin < .44){opioids -= .02;}
+	if(alcohol > .54 && polonium < .73 && methanol > .44){opioids += .02;}
+	if(sarin> .35 && Nerve_Gas > .7 && methanol < .68){chalk -= .02;}
+	if(alcohol > .3 || chlorine > .49 || formaldehyde > .42){chalk += .02;}
+	if(formaldehyde > .35 && Nerve_Gas > .29 || chlorine < .57 || sarin < .31){charcoal-= .01;}
+	if(methanol > .48 && polonium < .48 && (alcohol < .26||arsenic < .69)){charcoal += .04;}
+	if(methanol < .44 && formaldehyde < .34 || arsenic < .31){aspirin -= .05;}
+	if(sarin < .62 && polonium > .57 && alcohol < .69 && Nerve_Gas > .42){aspirin += .01;}
+	if(Nerve_Gas < .36 || methanol < .58 || chlorine > .37){antibodies -= .01;}
+	if((alcohol < .38 || polonium < .38) && (sarin < .38 || formaldehyde > .38)){antibodies += .04;}
 
 
 	//////////////////////////////////////////////////////
