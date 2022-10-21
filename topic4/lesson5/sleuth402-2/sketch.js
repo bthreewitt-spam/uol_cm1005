@@ -58,12 +58,21 @@ function setup()
 function draw()
 {
 	///////////////////ADD YOUR CODE HERE///////////////////
-	if (currentRoad == "Lerdorf Way")
-	{
+	if (currentRoad === 'Lerdorf Way' || currentRoad === 'Packard Avenue') {
 		det.speedX = 0;
 		det.speedY = -1;
 	}
-
+	else if (currentRoad === 'Gosling Road' || currentRoad === 'Ada Avenue') {
+		det.speedX = -1;
+		det.speedY = 0;
+	}
+	else if (currentRoad === 'Raskin Street'){
+		det.speedX = 0;
+		det.speedY = 1;
+	} else {
+		det.speedX = 1;
+		det.speedY = 0;
+	}
 
 	///////////////DO NOT CHANGE CODE BELOW THIS POINT///////////////////
 	background(50);
