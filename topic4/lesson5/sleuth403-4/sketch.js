@@ -52,7 +52,21 @@ function draw()
     image(img,0,0);
 
     //Write your code below here ...
-
+    if(dist(327,175,mouseX,mouseY) < 133){
+        fill(75,0,130);
+        ellipse(327, 175, 266);
+    }
+    else if(mouseX > 504 && mouseX < 656 &&
+    mouseY > 190 && mouseY < 294){
+        fill(210,105,30);
+        rect(504,190,151, 103);
+    } 
+    else {
+        fill(219,112,147);
+        rect(285,320,205, 420)
+    }
+// x 490 , 285 y 320, 740
+    
     // finally, draw Shiffman's position
     strokeWeight(2);
     stroke(255);
