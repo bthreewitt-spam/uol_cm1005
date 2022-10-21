@@ -8,15 +8,14 @@ let treePos_y;
 
 let floorPos_y;
 
-function setup()
-{
+function setup() {
 	createCanvas(1024, 576);
 	floorPos_y = 432;
 	
-	cloud = {x_pos: 250, 
+	cloud = {x_pos: 450, 
 			 y_pos: 150, 
-			 width: 250, 
-			 height:200};
+			 width: 100, 
+			 height:45};
 
 	mountain = {x_pos: 150, 
 				y_pos: floorPos_y, 
@@ -55,7 +54,45 @@ function mousePressed() {
 	gameChar_y = mouseY;
 }
 function drawCloud(){
+	push();
+	rectMode(CENTER);
+	///////////////////////CLOUD//////////////////////////
+	fill(254);
+					///////MAIN///////
+	ellipse(cloud.x_pos, cloud.y_pos,							//POSITION
+			cloud.width,cloud.height * .9);					//SIZE
+					///BOTTOM_LEFT////
+	ellipse(cloud.x_pos - cloud.width / 2 * .3,				// X
+			cloud.y_pos + cloud.height / 2 * .1,				// Y
+			cloud.width * .4, cloud.height);					//SIZE
+					///BOTTOM_RIGHT///
+	ellipse(cloud.x_pos + cloud.width / 2 * .3,				// X
+			cloud.y_pos + cloud.height / 2 * .5,				// Y
+			cloud.width * .4,cloud.height * .5);			//SIZE
+					//MIDDLE_CORNERS//
+	rect(cloud.x_pos,											// X
+	  cloud.y_pos - cloud.height / 2 * .1, 					// Y
+	  cloud.width * .9,cloud.height * .8,15);			//SIZE
+					///TOP_CORNERS////
+	rect(cloud.x_pos,											// X
+	  cloud.y_pos - cloud.height / 2 * .8,	 				// Y
+	  cloud.width * .58,cloud.height*.9, 18);			//SIZE
+					////TOP_CENTER////
+	ellipse(cloud.x_pos,										// X
+		cloud.y_pos - cloud.height / 2 * 1.22, 				// Y
+		cloud.width * .32,cloud.height * .75);			//SIZE
+	///////////////////////EYES///////////////////////////
+	fill(1);
+					///////LEFT///////
+	rect(cloud.x_pos - cloud.width / 2 * .12,				// X
+		cloud.y_pos - cloud.height / 2 * 1.2, 				// Y
+		cloud.width * .025,cloud.height * .23, 2);		// SIZE
+					//////RIGHT///////
+	rect(cloud.x_pos + cloud.width / 2 * .12,				// X
+		cloud.y_pos - cloud.height / 2 * 1.2, 				// Y
+		cloud.width * .025,cloud.height * .23, 2);		// SIZE
 	
+	pop();
 }
 function drawMountain(){
 	//////////////////////Dark_Grey_Detail////////////////////////// 
