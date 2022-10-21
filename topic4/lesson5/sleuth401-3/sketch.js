@@ -110,6 +110,14 @@ function draw()
 	//Write conditional statements to change the amount of each substance ...
 
 
+	if(sarin > .39 || novichok < .37 || polonium < .66){chalk -= .02;}
+	if(SpiderVenom > .64 && chlorine < .25 || formaldehyde > .73){chalk -=.01;}
+	if(SpiderVenom < .61 || chlorine < .25 || polonium > .45){Hydrochloric_Acid -= .03;}
+	if(sarin < .34 && formaldehyde > .71){Hydrochloric_Acid += .01;}
+	if(chlorine > .57 && SpiderVenom > .37 && formaldehyde > .73){Calcium_Gluconate -= .03;}
+	if(polonium < .67 || novichok > .32 && sarin < .41){Calcium_Gluconate += .02;}
+	if(SpiderVenom < .75 && formaldehyde > .49){Calcium_Chloride -= .04;}
+	if(chlorine < .27 && sarin > .35){Calcium_Chloride += .04;}
 
 
 	//////////////////////////////////////////////////////
