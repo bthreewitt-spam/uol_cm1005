@@ -94,7 +94,12 @@ function draw()
 	//Develop the antidote below
 	//Write conditional statements to change the amount of each substance ...
 
-
+	if(warfarin>.52){plasma -= .04;}
+	if(alcohol < .33){plasma += .05;}
+	if(warfarin < .41){paracetamol -= .05;}
+	if(alcohol < .72){paracetamol += .02;}
+	if(warfarin > .62){antivenom -= .02;}
+	if(alcohol > .3){antivenom += .01;}
 
 
 	//////////////////////////////////////////////////////
