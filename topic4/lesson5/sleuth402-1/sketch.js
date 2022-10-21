@@ -55,9 +55,17 @@ function setup()
 function draw()
 {
 	///////////////////ADD YOUR CODE HERE///////////////////
-	if (currentRoad == "Raskin Street")
+	if (currentRoad === 'Raskin Street' || currentRoad === 'Dijkstra Street')
 	{
 		direction = "east";
+	}
+	if (currentRoad === 'Gates Avenue' || currentRoad === 'Packard Avenue')
+	{
+		direction = "south";
+	} 
+	if (currentRoad === 'Huffman Street')
+	{
+		direction = "west";
 	}
 
 
