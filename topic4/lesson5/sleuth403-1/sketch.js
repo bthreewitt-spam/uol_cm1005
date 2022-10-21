@@ -49,7 +49,10 @@ function draw()
 
     //Write your code below here ...
 
-
+    if(mouseY < 160){
+        fill(178,34,34);
+        rect(0,0,width,160);
+    }
 
     // finally, draw Shiffman's position
     strokeWeight(2);
