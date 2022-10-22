@@ -10,7 +10,9 @@ Game interaction
 
 let isLeft, isRight, isFalling, isPlummeting;
 
-const MOVEMENT_SPEED = 1.5, FALL_SPEED = 3, JUMP_HEIGHT = 100;
+let collectable, canyon;
+
+const MOVEMENT_SPEED = 1.5, FALL_SPEED = 3, PLUMMET_SPEED = 4, JUMP_HEIGHT = 100;
 
 let gameChar_x;
 let gameChar_y;
@@ -18,15 +20,28 @@ let floorPos_y;
 
 
 function setup() {
+	createCanvas(1024, 576);
+	
+	floorPos_y = height * 3/4;
+	gameChar_x = width/2;
+	gameChar_y = floorPos_y;
+	
 	isLeft = false;
 	isRight = false;
 	isFalling = false;
 	isPlummeting = false;
 	
-	createCanvas(1024, 576);
-	floorPos_y = height * 3/4;
-	gameChar_x = width/2;
-	gameChar_y = floorPos_y;
+		collectable = {
+			x_pos: 300,
+			y_pos: floorPos_y - 24,
+			size: 49,
+			isFound: false
+		};
+
+	canyon = {
+		x_pos: 350,
+		width: 40
+	};
 }
 function draw() {
 
@@ -41,16 +56,16 @@ function draw() {
 
 	//draw the canyon
 	
-	
+	drawCanyon(canyon.x_pos,canyon.width);
 
 	//the game character
-	if(isLeft && isFalling)
+	if(isLeft && (isFalling || isPlummeting))
 	{
 		// add your jumping-left code
 		drawCharacter(6);
 
 	}
-	else if(isRight && isFalling)
+	else if(isRight && (isFalling || isPlummeting))
 	{
 		// add your jumping-right code
 		drawCharacter(5);
@@ -79,24 +94,46 @@ function draw() {
 
 	///////////INTERACTION CODE//////////
 	//Put conditional statements to move the game character below here
+	console.log(gameChar_x > canyon.x_pos && gameChar_x < canyon.x_pos + canyon.width && floorPos_y )
+	//canyon fall
+	if(gameChar_x > canyon.x_pos && gameChar_x < canyon.x_pos + canyon.width && gameChar_y >= floorPos_y){isPlummeting = true;}
+	if(isPlummeting){
+		gameChar_y += FALL_SPEED;
+		
+		if(isLeft){gameChar_x += .5;}
+		else if(isRight){gameChar_x -= 2;} 
+		else {gameChar_x -= 1;}
+	}
 	
+	//collectable
+	if(!collectable.isFound){drawCollectable(collectable.x_pos, collectable.y_pos, collectable.size);}
+	if(dist(gameChar_x, gameChar_y, collectable.x_pos, collectable.y_pos) < collectable.size){collectable.isFound = true;}
+	
+	//movement
 	if(isLeft){gameChar_x -= MOVEMENT_SPEED;}
 	if(isRight){gameChar_x += MOVEMENT_SPEED;}
 	
+	//jump gravity
 	if(gameChar_y < floorPos_y){
 		gameChar_y += FALL_SPEED;
 		isFalling = true;
 	} else {
 		isFalling=false;
 	}
+	
+	if(keyIsPressed){showKeycode(key.toUpperCase());}
+	if(gameChar_y > height+ 100){window.location.reload();}
 }
 function keyPressed() {
 	// if statements to control the animation of the character when
 	// keys are pressed.
-	if(keyCode === 65){isLeft = true;} //a
-	if(keyCode === 68){isRight = true;} //d
-	if(keyCode === 87 && !isFalling){gameChar_y -= JUMP_HEIGHT;}//w
-
+	
+	if(!isPlummeting){
+		if(keyCode === 65){isLeft = true;} //a
+		if(keyCode === 68){isRight = true;} //d
+		if(keyCode === 87 && !isFalling){gameChar_y -= JUMP_HEIGHT;}//w
+	}
+	
 	//open up the console to see how these work
 	console.log("keyPressed: " + key);
 	console.log("keyPressed: " + keyCode);
@@ -186,7 +223,7 @@ function drawCharacter(state){
 			pop();
 
 			arc(gameChar_x, gameChar_y-50, 30, 31, PI+.25, -.25, CHORD); //top of mask
-			arc(gameChar_x, gameChar_y-50, 29, 31, -.5, PI-.15, CHORD); //bottom of mask
+			arc(gameChar_x, gameChar_y-50, 30, 31, -.5, PI-.15, CHORD); //bottom of mask
 
 			fill(0);
 			ellipse(gameChar_x - 11 , gameChar_y-51, 4); // left eye
@@ -252,7 +289,7 @@ function drawCharacter(state){
 			pop();
 
 			arc(gameChar_x, gameChar_y-50, 30, 31, PI+.25, -.25, CHORD); //top of mask
-			arc(gameChar_x, gameChar_y-50, 29, 31, -.5, PI-.15, CHORD); //bottom of mask
+			arc(gameChar_x, gameChar_y-50, 30, 31, -.5, PI-.15, CHORD); //bottom of mask
 
 			fill(0);
 			ellipse(gameChar_x - 11 , gameChar_y-51, 4); // left eye
@@ -261,4 +298,62 @@ function drawCharacter(state){
 			console.error("No state declared");
 	}
 	
+}
+function drawCollectable(x,y,size){
+	push();
+
+	rectMode(CENTER);
+	let s = size/49
+	scale(s);
+
+	//////////////////////////////////OUTER//////////////////////////////////////
+								//////BLACK//////
+	fill(1);
+	ellipse(x/s,y/s,48,49);
+								//////WHITE//////
+	fill(255);
+	ellipse((x-5)/s,y/s,31,37);
+								//////GOLD///////
+	fill(252, 192, 5);
+	ellipse((x-1)/s,(y+1)/s,37,40);
+	//////////////////////////////////INNER//////////////////////////////////////
+								//////BLACK//////
+	fill(1);
+	rect((x-1.5)/s,(y+3)/s,9,20,2);
+								//////WHITE//////
+	fill(255);
+	rect((x-3)/s,(y+1.5)/s,10,21,2);
+								//////GOLD///////
+	fill(257, 198, 15);
+	rect((x-2.5)/s,(y+2)/s,9,20,2);
+
+	pop()
+}
+function drawCanyon(x, width){
+	/////////////////////////////LIGHT///////////////////////////////
+	fill(33, 29, 35);
+	quad(x+1,432,								//LEFT__TOP
+		width+x, 432,							//RIGHT_TOP
+		width+x-33,576,						//RIGHT_BOTTOM
+		x-67,576);								//LEFT__BOTTOM
+	/////////////////////////////DARK////////////////////////////////
+	fill(0)
+	quad(x,441, 									//LEFT__TOP
+		width+x-3,441,							//RIGHT_TOP
+		width+x-35,576, 						//RIGHT_BOTTOM
+		x-65,576);								//LEFT__BOTTOM
+	/////////////////////////////DIRT////////////////////////////////
+	fill(113, 54, 51);
+	triangle(x+1,439,							//TOP____CENTER
+		x-67,576,								//BOTTOM_RIGHT
+		x-69.5,576);							//BOTTOM_LEFT
+}
+
+function showKeycode(key){
+	fill(40)
+	rect(25,25,100,100, 10);
+	fill(255);
+	textAlign(CENTER);
+	textSize(90);
+	text(key, 25,37, 100, 100);
 }
