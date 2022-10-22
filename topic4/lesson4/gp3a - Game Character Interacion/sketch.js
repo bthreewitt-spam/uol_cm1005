@@ -17,8 +17,7 @@ let gameChar_y;
 let floorPos_y;
 
 
-function setup()
-{
+function setup() {
 	isLeft = false;
 	isRight = false;
 	isFalling = false;
@@ -29,9 +28,7 @@ function setup()
 	gameChar_x = width/2;
 	gameChar_y = floorPos_y;
 }
-
-function draw()
-{
+function draw() {
 
 	///////////DRAWING CODE//////////
 
@@ -93,10 +90,7 @@ function draw()
 		isFalling=false;
 	}
 }
-
-
-function keyPressed()
-{
+function keyPressed() {
 	// if statements to control the animation of the character when
 	// keys are pressed.
 	if(keyCode === 65){isLeft = true;} //a
@@ -107,9 +101,7 @@ function keyPressed()
 	console.log("keyPressed: " + key);
 	console.log("keyPressed: " + keyCode);
 }
-
-function keyReleased()
-{
+function keyReleased() {
 	// if statements to control the animation of the character when
 	// keys are released.
 	if(keyCode === 65){isLeft = false;}
@@ -118,7 +110,6 @@ function keyReleased()
 	console.log("keyReleased: " + key);
 	console.log("keyReleased: " + keyCode);
 }
-
 function drawCharacter(state){
 	/* 
 	* 1. standing front facing
