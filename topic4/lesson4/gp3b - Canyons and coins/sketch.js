@@ -334,7 +334,7 @@ function drawCanyon(x, width){
 	fill(33, 29, 35);
 	quad(x+1,432,								//LEFT__TOP
 		width+x, 432,							//RIGHT_TOP
-		width+x-33,576,						//RIGHT_BOTTOM
+		width+x-33,576,							//RIGHT_BOTTOM
 		x-67,576);								//LEFT__BOTTOM
 	/////////////////////////////DARK////////////////////////////////
 	fill(0)
